@@ -1,0 +1,89 @@
+<div *ngIf="show" class="card card-body mt-5 gap-5">
+  <div class="card-header ">
+    <h5>Progresso: Caio Silva</h5>
+  </div>
+  <div class="card-text">
+    <div class="card-text">
+      <p class="card-header">Informações sobre: </p>
+    </div>
+    <div class="d-flex flex-wrap gap-4">
+      <div class="card card-body">
+        <div class="card-header-pills">
+          <h6>Relatos de Progresso</h6>
+        </div>
+        <div>
+          <a href="/personal/relation" class="text-decoration-none text-dark-emphasis ">Ver relatos criados <i class="bi bi-chat-left-text"></i></a>
+        </div>
+        <div class="card-footer mt-2">
+          <button class="btn btn-group btn-outline-success">Criar Relato</button>
+        </div>
+      </div>
+      <div class="card card-body">
+        <div class="card-header-pills">
+          <h6>Ver tarefas</h6>
+        </div>
+        <div>
+          <a href="/personal/task" class="text-decoration-none text-dark-emphasis ">Tarefas Recebidas <i class="bi bi-chat-left-text"></i></a>
+        </div>
+        <div class="card-footer mt-2">
+          <button class="btn btn-group btn-outline-success">Visualizar Tarefas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-text">
+    <div class="card-text">
+      <p class="card-header">Desempenho nas atividades: </p>
+    </div>
+    <div class="card-link mt-4">
+      <h6>Legenda:</h6>
+      <div class=" d-flex flex-wrap w-auto gap-5">
+        <div class="d-flex flex-column align-items-center w-auto">
+          <i name="excellent" class="mb-1 bi bi-emoji-heart-eyes fs-4 text-danger"></i>
+          <label for="excellent">Excelente</label>
+        </div>
+        <div class="d-flex flex-column align-items-center w-auto">
+          <i name="excellent" class="mb-1 bi bi-emoji-grin fs-4 text-warning  "></i>
+          <label for="excellent">Muito Bom</label>
+        </div>
+        <div class="d-flex flex-column align-items-center w-auto">
+          <i name="excellent" class="mb-1 bi bi-emoji-smile fs-4 text-success"></i>
+          <label for="excellent">Bom</label>
+        </div>
+        <div class="d-flex flex-column align-items-center w-auto">
+          <i name="excellent" class="mb-1 bi bi-emoji-wink fs-4 text-primary  "></i>
+          <label for="excellent">Pode Melhorar</label>
+        </div>
+        <div class="d-flex flex-column align-items-center w-auto">
+          <i name="excellent" class="mb-1 bi bi-emoji-neutral fs-4 text-danger"></i>
+          <label for="excellent">Vamos Trabalhar Nisso</label>
+        </div>
+      </div>
+    </div>
+    <div class="card card-text mt-3">
+      <div class="card-header">
+        <h6>Última Tarefa Realizada</h6>
+      </div>
+      <div class="card-text p-2 d-flex flex-wrap gap-3">
+        <div>
+          <h6>Atividade:</h6>
+          <p>Coordenação Motora Fina com Massinha</p>
+          <h6>Observações:</h6>
+          <ul>
+            <li>Maior concentração durante a execução da atividade.</li>
+            <li>Melhora na força e precisão dos movimentos das mãos.</li>
+            <li>Interagiu mais com o terapeuta e demonstrou satisfação ao concluir a tarefa.</li>
+          </ul>
+        </div>
+        <div class="d-flex flex-column align-items-center w-auto">
+          <h6>Avaliação do(a) Terapeuta:</h6>
+          <i name="excellent" class="mb-1 bi bi-emoji-heart-eyes fs-4 text-danger"></i>
+          <label for="excellent">Excelente</label>
+        </div>
+      </div>
+      <div class="card-footer mt-2">
+        <button class="btn btn-group btn-outline-success">Criar Relato</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="card schedule-table-container p-4">
+  <h2 class="  mb-4">Minha Agenda</h2>
+  <h3 class=" card-header mb-4 bg-light">Mês de {{showMonthName}}</h3>
+  <div class="d-flex flex-wrap align-items-start justify-content-center gap-4">
+  <select class="w-auto  mb-4 me-3" name="month" id="month" (change)="setMonth($event)">
+    <option value="" disabled selected>Selecione um mês</option>
+    <option *ngFor="let month of monthName" [value]="month">{{ month }}</option>
+  </select>
+  <select class="  mb-4 " name="month" id="month" (change)="setWeek($event)">
+    <option value=""  selected>Selecione uma semana</option>
+    <option *ngFor="let i of weekValue" [value]="i">{{ i + 1 }}ª Semana de {{showMonthName}} </option>
+  </select>
+  <div>
+    <button class="btn btn-group-lg btn-outline-success">
+      <i class=" bi bi-pencil-square me-1 " ></i>
+      Criar agendamento
+    </button>
+  </div>
+  </div>
+  <br>
+  <table class="table table-hover table-striped align-middle">
+
+      <ng-container *ngIf="weekGroup[selectedWeek]">
+        <ng-container *ngFor="let date of weekGroup[selectedWeek] | keyvalue">
+          <thead class="table-light  bg-white">
+            <tr>
+              <th class="align-top">
+                <strong>{{ date.key | date:'EEEE - dd/MM/yyyy':'':'pt-BR' }}</strong>
+
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+
+            <td class="p-0">
+              <div
+                class="appointments-container d-flex flex-row flex-wrap p-2"
+                style="max-height: 500px; overflow-y: auto;"
+              >
+                <ng-container *ngIf="date.value.length; else empty">
+                  <ng-container *ngFor="let appt of date.value">
+                    <app-appointment
+                      [showAppointment]="appt"
+                      class="mb-2"
+                    ></app-appointment>
+                  </ng-container>
+                </ng-container>
+                <ng-template #empty>
+                  <div class="text-center text-muted py-4">
+                    Nenhum agendamento
+                  </div>
+                </ng-template>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        </ng-container>
+      </ng-container>
+  </table>
+
+
+</div>

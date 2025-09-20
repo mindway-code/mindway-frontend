@@ -1,0 +1,136 @@
+<div class="register-page">
+  <!-- Coluna Visual -->
+  <div class="register-visual">
+    <div class="overlay">
+      <h2>Junte-se ao MindWay</h2>
+      <p>Comece a acompanhar o progresso das crianças neurodivergentes</p>
+    </div>
+  </div>
+
+  <!-- Coluna de Formulário -->
+  <div class="register-form-wrapper d-flex align-items-center justify-content-center">
+    <div class="register-card p-4">
+      <h3 class="text-center mb-4">Criar Conta</h3>
+      <form  #registerForm="ngForm" autocomplete="off">
+        <!-- Nome Completo -->
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            id="fullName"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="fullName"
+            name="fullName"
+            required
+            #nameInput="ngModel"
+          />
+          <label for="fullName">
+            <i class="bi bi-person-fill me-2"></i>
+            Nome Completo
+          </label>
+          <div *ngIf="nameInput.invalid && nameInput.touched" class="error m-1">
+            Nome é obrigatório
+          </div>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            id="surname"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="surname"
+            name="surname"
+            required
+            #surnameInput="ngModel"
+          />
+          <label for="surname">
+            <i class="bi bi-person-fill me-2"></i>
+            Sobrenome
+          </label>
+          <div *ngIf="surnameInput.invalid && surnameInput.touched" class="error m-1">
+            Sobrenome é obrigatório
+          </div>
+        </div>
+
+        <!-- E-mail -->
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="email"
+            name="email"
+            required
+            #emailInput="ngModel"
+          />
+          <label for="email">
+            <i class="bi bi-envelope-fill me-2"></i>
+            E-mail
+          </label>
+          <div *ngIf="emailInput.invalid && emailInput.touched" class="error m-1">
+            E-mail válido é obrigatório
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="password"
+            name="password"
+            required
+            minlength="6"
+            #pwInput="ngModel"
+          />
+          <label for="password">
+            <i class="bi bi-lock-fill me-2"></i>
+            Senha
+          </label>
+          <div *ngIf="pwInput.invalid && pwInput.touched" class="error m-1">
+            Mínimo 6 caracteres
+          </div>
+        </div>
+
+        <!-- Confirmar Senha -->
+        <div class="form-floating mb-4">
+          <input
+            type="password"
+            id="confirmPassword"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            required
+            #confirmPwInput="ngModel"
+          />
+          <label for="confirmPassword">
+            <i class="bi bi-check2-circle me-2"></i>
+            Confirmar Senha
+          </label>
+          <div *ngIf="confirmPwInput.touched && confirmPassword !== password" class="error">
+            Senhas não conferem
+          </div>
+        </div>
+
+        <!-- Botão Criar Conta -->
+        <button
+          type="submit"
+          class="btn btn-accent btn-lg w-100 mb-3"
+          [disabled]="registerForm.invalid || password !== confirmPassword"
+        >
+          Cadastrar
+        </button>
+
+        <!-- Link para Login -->
+        <div class="links text-center">
+          <span>Já tem conta?</span>
+          <a routerLink="/login">Entrar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

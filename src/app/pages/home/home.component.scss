@@ -1,0 +1,104 @@
+// home.component.scss
+
+$primary-color: #006c70;
+$secondary-color: #f4b313;
+$bg-color: #f4f7f6;
+$text-muted-color: #6c757d;
+
+.bg-custom {
+  background-color: #fff;
+  border-radius: 10px;
+  @media (max-width: 500px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 1.1rem;
+    }
+    .btn {
+      width: 80%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+h1 {
+  font-weight: 700;
+}
+
+h1 span {
+  color: $primary-color;
+}
+
+h2 {
+  color: $primary-color;
+  font-weight: 700;
+}
+
+.features {
+  @media (max-width: 500px) {
+    .features-card{
+      width: 80%;
+    }
+  }
+}
+
+.features-card {
+  width: 380px;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
+  box-shadow: 1px 1px 15px 3px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-title {
+  color: $primary-color;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 20px;
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
+}
+
+.img-top {
+  border-radius: 10px;
+  height: auto;
+  width: 80%;
+  max-height: 290px;
+  min-width: 50px;
+  overflow-y: hidden;
+}
+
+.btn {
+  border-radius: 30px;
+  font-weight: 700;
+  padding: 12px 30px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+}
+
+.btn-warning {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+}
+
+.btn:hover {
+  background-color:  ($primary-color, 10%);
+  border-color:  ($primary-color, 10%);
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+

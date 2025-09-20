@@ -1,0 +1,38 @@
+<div class="profile-container container-fluid">
+  <!-- Header -->
+  <div class="profile-header text-center mb-5">
+    <div class="avatar-wrapper position-relative d-inline-block">
+      <img
+        src="assets/img/perfil_1-removebg-preview.png"
+        alt="Avatar"
+        class="avatar rounded-circle"
+      >
+      <button class="edit-avatar btn btn-light">
+        <i class="bi bi-pencil-fill"></i>
+      </button>
+    </div>
+    <h1 class="mt-3">João da Silva</h1>
+    <p class="role text-muted">Pai de criança neurodivergente</p>
+  </div>
+
+  <!-- Cards -->
+  <div class="row gy-4">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let card of cards">
+      <div class="card profile-card h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="card-icon mb-3">
+            <i class="{{card.icon}}"></i>
+          </div>
+          <h5 class="card-title">{{ card.title }}</h5>
+          <p class="card-text flex-grow-1">{{ card.text }}</p>
+          <a
+            [routerLink]="card.link"
+            class="btn btn-accent mt-auto"
+          >
+            {{ card.button }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

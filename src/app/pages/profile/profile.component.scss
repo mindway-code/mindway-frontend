@@ -1,0 +1,97 @@
+/* Cores MindWay */
+$primary:  #006c70;
+$accent:   #f4b313;
+$bg-light: #f4f7f6;
+$text-muted: #6c757d;
+
+.profile-container {
+  background: $bg-light;
+  padding: 2rem;
+}
+
+/* Header */
+.profile-header {
+  .avatar-wrapper {
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border: 4px solid $primary;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .edit-avatar {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      padding: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+  }
+  h1 {
+    color: $primary;
+    font-weight: 700;
+  }
+  .role {
+    color: $text-muted;
+    font-size: 1rem;
+  }
+}
+
+/* Cards */
+.profile-card {
+  border: none;
+  border-left: 4px solid $accent;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .card-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0 auto 1rem;
+  }
+  .card-title {
+    color: $primary;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .card-text {
+    color: #5f6368;
+    margin: 0.75rem 0;
+    line-height: 1.4;
+  }
+}
+
+.btn-accent {
+  background: $accent;
+  border: none;
+  border-radius: 20px;
+  color: $primary;
+  padding: 0.5rem 1rem;
+  transition: filter 0.2s;
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .profile-header {
+    .avatar-wrapper { .edit-avatar { width: 28px; height: 28px; }}
+  }
+  .profile-card { margin-bottom: 1rem; }
+}

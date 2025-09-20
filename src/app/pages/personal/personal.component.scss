@@ -1,0 +1,106 @@
+// pages/personal-page/personal-page.component.scss
+
+/* ----------  Paleta de Cores MindWay  ---------- */
+$primary-color: #006c70;    // verde escuro
+$secondary-color: #f4b313;  // amarelo médio
+$background-color: #f4f7f6; // fundo suave claro
+
+/* Container da Página */
+.container-fluid {
+  background-color: $background-color;
+}
+
+/* Sidebar */
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background-color: $primary-color;
+  padding-top: 60px;
+}
+
+.sidebar-header {
+  color: #fff;
+}
+
+.sidebar .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  padding: 15px 20px;
+  transition: background-color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: $secondary-color;
+  color: #fff;
+}
+
+.sidebar .nav-item.active .nav-link {
+  background-color: darken($secondary-color, 10%);
+}
+
+.content-area {
+  margin-left: 250px;
+  padding-top: 50px;
+}
+
+.card {
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  color: $primary-color;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.card-text {
+  color: #5f6368;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+    border-color: darken($secondary-color, 10%);
+  }
+}
+
+/* Ajustes para Imagens */
+img.rounded-circle {
+  border: 5px solid $primary-color;
+  width: 120px;
+  height: 120px;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+    padding-top: 30px;
+  }
+
+  .content-area {
+    margin-left: 0;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+}

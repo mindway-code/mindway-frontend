@@ -1,0 +1,43 @@
+<div class="pref-container" *ngIf="preferencesForm">
+  <h3>Preferências de Perfil</h3>
+  <form [formGroup]="preferencesForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="theme">Tema do Sistema</label>
+      <select id="theme" formControlName="theme">
+        <option value="light">Claro</option>
+        <option value="dark">Escuro</option>
+      </select>
+    </div>
+
+    <div class="form-group switch-group">
+      <label>Receber Notificações por Email</label>
+      <input type="checkbox" formControlName="emailNotifications" />
+    </div>
+
+    <div class="form-group switch-group">
+      <label>Bloquear Notificações no sistema</label>
+      <input type="checkbox" formControlName="pushNotifications" />
+    </div>
+
+    <div class="form-group">
+      <label for="notificationFrequency">Frequência de Notificações</label>
+      <select id="notificationFrequency" formControlName="notificationFrequency">
+        <option value="instant">Imediato</option>
+        <option value="daily">Diário</option>
+        <option value="weekly">Semanal</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="language">Idioma da Interface</label>
+      <select id="language" formControlName="language">
+        <option value="pt-BR">Português (Brasil)</option>
+        <option value="en-US">English (US)</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-save" [disabled]="loading || preferencesForm.invalid">
+      {{ loading ? 'Salvando...' : 'Salvar Preferências' }}
+    </button>
+  </form>
+</div>

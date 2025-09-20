@@ -1,0 +1,88 @@
+<div class="nofication-container d-flex flex-column p-4">
+  <div class="nofication-head d-flex">
+    <div>
+      <h2>Notificações</h2>
+      <p>Fique por dentro das atualizações importantes.</p>
+    </div>
+    <div class="nofication-head-right d-flex flex-row gap-4 align-items-center">
+      <div class="input-container d-flex flex-row">
+        <i class="bi bi-search" ></i>
+        <input
+          type="text"
+          class="search-input btn-group "
+          placeholder="Buscar Notificações..."
+          [(ngModel)]="searchTerm"
+          >
+      </div>
+      <div>
+        <button
+          (click)="clearAll()"
+          class="btn btn-outline-danger  rounded-5 ">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-container d-flex flex-column">
+
+    <!-- NÃO LIDAS -->
+    <ng-container *ngIf="unreadNotifications().length; else emptyState" >
+      <h4>Não Lidas</h4>
+      <div class="d-flex flex-row gap-4">
+        <div class="card-wrapper " *ngFor="let notif of unreadNotifications()">
+          <div class="card notification-card " [ngClass]="notif.type">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex align-items-center mb-2">
+                <div class="icon-wrapper me-2">
+                  <i class="{{ iconClass(notif.type) }}"></i>
+                </div>
+                <h6 class="card-title mb-0">{{ notif.title }}</h6>
+              </div>
+              <p class="card-text flex-grow-1">{{ notif.message }}</p>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <small class="text-muted">{{ notif.date | date:'dd/MM/yyyy HH:mm' }}</small>
+                <button class="btn btn-sm btn-mark-read" (click)="markAsRead(notif)" title="Marcar como lida">
+                  <i class="bi bi-chevron-double-down"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- LIDAS -->
+    <ng-container *ngIf="readNotifications().length">
+      <h4>Notificações Lidas</h4>
+      <div class="d-flex flex-row gap-4">
+        <div class="card-wrapper" *ngFor="let notif of readNotifications()">
+          <div class="card notification-card " [ngClass]="notif.type">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex align-items-center mb-2">
+                <div class="icon-wrapper me-2">
+                  <i class="{{ iconClass(notif.type) }}"></i>
+                </div>
+                <h6 class="card-title mb-0">{{ notif.title }}</h6>
+              </div>
+              <p class="card-text flex-grow-1">{{ notif.message }}</p>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <small class="text-muted">{{ notif.date | date:'dd/MM/yyyy HH:mm' }}</small>
+                <span class="badge rounded-pill bg-secondary">Lida</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- VAZIO -->
+    <ng-template #emptyState>
+      <div class="empty-state d-flex flex-column align-items-center">
+        <i class="bi bi-bell-slash fs-1 text-muted"></i>
+        <p class="mt-3 text-muted">Nenhuma notificação encontrada</p>
+      </div>
+    </ng-template>
+  </div>
+
+
+</div>

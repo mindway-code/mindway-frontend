@@ -1,0 +1,80 @@
+// pages/footer/footer.component.scss
+
+/* ----------  Paleta de Cores MindWay  ---------- */
+$primary-color: #006c70;    // verde escuro
+$secondary-color: #f4b313;  // amarelo médio
+
+.footer {
+  background-color: $primary-color;
+  color: #fff;
+  padding: 40px 0;
+
+  h5 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+
+  .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .list-unstyled li {
+    margin-bottom: 10px;
+  }
+
+  .list-unstyled a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+
+  .social-icons {
+    font-size: 1.5rem;
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    color: #d3d3d3;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 0;
+  }
+
+  .social-icons {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1.1rem;
+  }
+}

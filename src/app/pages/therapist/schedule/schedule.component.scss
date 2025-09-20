@@ -1,0 +1,125 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+
+/* Container principal */
+.schedule-table-container {
+  background: $bg-light;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  // box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+  /* Título principal */
+  h2 {
+    color: $mw-primary;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Data do agendamento */
+  .date-header {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: $mw-primary;
+    color: #fff;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .appointment-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
+
+select {
+  font-family: 'Roboto';
+  max-width: fit-content;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: ease 0.5s;
+}
+
+select:hover {
+  transform: translateY(00.5rem);
+}
+
+/* Card de agendamento */
+.appointment-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: calc(33.33% - 1rem); /* ajusta 3 cards por linha */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $mw-primary;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-subtitle {
+    font-size: 1rem;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    color: #5f6368;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Botões */
+  .btn-outline-primary {
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem;
+    color: $mw-primary;
+    border-color: $mw-primary;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+
+    &:hover {
+      background: $mw-primary;
+      color: #fff;
+    }
+  }
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 992px) {
+  .appointment-card {
+    width: calc(50% - 1rem); /* ajusta 2 cards por linha */
+  }
+}
+
+@media (max-width: 576px) {
+  .appointment-card {
+    width: 100%; /* 1 card por linha */
+  }
+}

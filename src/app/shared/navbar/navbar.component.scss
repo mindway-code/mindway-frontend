@@ -1,0 +1,157 @@
+/* --- Paleta MindWay --- */
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$txt-muted:   #6c757d;
+
+
+/* Container de botões */
+.nav-auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Estilos básicos para todos os botões */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Botão “Entrar” (outline primary) */
+.btn-login {
+  background: transparent;
+  color: $mw-accent;
+  border: 1px solid $mw-primary;
+
+  &:hover {
+    background: $mw-primary;
+    color: #fff;
+  }
+}
+
+/* Botão “Registrar” (filled primary, hover accent) */
+.btn-register {
+  background: $mw-primary;
+  color: #fff;
+  border: 1px solid $mw-primary;
+
+  &:hover {
+    background: $mw-accent;
+    border-color: $mw-accent;
+    color: $bg-light;
+  }
+}
+
+/* Navbar */
+.custom-navbar {
+  background: $mw-primary;
+  color: #fff;
+  height: 60px;
+
+  .navbar-logo {
+    height: 40px;
+    margin-right: 0.5rem;
+  }
+  .brand-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .btn-icon {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    padding: 0.25rem 0.5rem;
+    transition: background 0.2s;
+    &:hover {
+      background: rgba(255,255,255,0.1);
+      border-radius: 0.5rem;
+    }
+  }
+
+  .search-wrapper {
+    background: #fff;
+    border-radius: 2rem;
+    padding: 0.2rem 0.75rem;
+    i {
+      color: $txt-muted;
+      margin-right: 0.5rem;
+    }
+    .search-input {
+      border: none;
+      width: 120px;
+      &:focus {
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+
+  .badge-notif {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%,-50%);
+    background: $mw-accent;
+    color: $mw-primary;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+  }
+}
+
+/* Offcanvas Menu */
+.side-menu {
+  background: $mw-primary;
+  width: 240px;
+
+  .offcanvas-body {
+    padding-top: 1rem;
+  }
+  .nav-link {
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    transition: background 0.2s;
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    &.active {
+      border-bottom: 2px solid $mw-accent;
+      border-radius: 5px;
+      color: $mw-primary;
+      font-weight: 600;
+    }
+    i { font-size: 1.2rem; }
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .search-wrapper { display: none; }
+}
+
+@media (max-width: 390px) {
+  .actions {
+    width: 100%;
+    padding-block: 0.5rem;
+    padding-inline: .5rem;
+    background-color: #ffffffd3;
+
+    .bi {
+      color: black;
+    }
+  }
+}

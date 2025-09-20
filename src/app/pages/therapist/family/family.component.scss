@@ -1,0 +1,50 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+$border:      #4345444b;
+$group:       #fff;
+$input-border: #ccc;
+
+h1, h2, h3, h4, h5, h6 {
+  color: $mw-primary;
+}
+
+.family-list {
+
+  .search-box {
+    width: auto;
+    max-width: fit-content;
+    border: 1px solid $input-border;
+    padding-inline: 0.5rem;
+    background-color: $group;
+  }
+  input {
+    padding: 0.5rem 0.4rem;
+    border: none;
+    outline: none;
+    width: 100%;
+    background-color: transparent;
+  }
+  .card-body {
+    max-width: 25rem;
+  }
+  .card-text-container {
+    min-height: 5rem;
+  }
+  .actions {
+    max-width: 95%;
+  }
+}
+
+.actions {
+  button {
+    gap: 1rem;
+    @media(max-width: 800px) {
+      font-size: 0rem;
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+}

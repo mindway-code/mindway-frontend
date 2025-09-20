@@ -1,0 +1,76 @@
+<div class="login-page">
+  <!-- Coluna de Imagem -->
+  <div class="login-visual">
+    <div class="overlay">
+      <h2>Bem-vindo ao MindWay</h2>
+      <p>Acesse o acompanhamento de crianças neurodivergentes</p>
+    </div>
+  </div>
+
+  <!-- Coluna de Formulário -->
+  <div class="login-form-wrapper d-flex align-items-center justify-content-center">
+    <div class="login-card p-4">
+      <h3 class="text-center mb-4">Entrar no MindWay</h3>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm" autocomplete="off">
+        <!-- E-mail -->
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="email"
+            name="email"
+            required
+            #emailInput="ngModel"
+          />
+          <label for="email">
+            <i class="bi bi-envelope-fill me-2"></i>
+            E-mail
+          </label>
+          <div *ngIf="emailInput.invalid && emailInput.touched" class="error">
+            E-mail válido é obrigatório
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="form-floating mb-4">
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder=" "
+            [(ngModel)]="password"
+            name="password"
+            required
+            #passwordInput="ngModel"
+          />
+          <label for="password">
+            <i class="bi bi-lock-fill me-2"></i>
+            Senha
+          </label>
+          <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">
+            A senha é obrigatória
+          </div>
+        </div>
+
+        <!-- Botão -->
+        <button
+          type="submit"
+          class="btn btn-accent btn-lg w-100 mb-3"
+          [disabled]="loginForm.invalid"
+        >
+          Entrar
+        </button>
+
+        <!-- Links -->
+        <div class="links text-center">
+          <a routerLink="/recuperar-senha">Esqueceu a senha?</a>
+          <span class="mx-2">•</span>
+          <a routerLink="/register">Criar conta</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

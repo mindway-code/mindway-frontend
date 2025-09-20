@@ -1,0 +1,78 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+$border: #4345444b;
+$group: #fff;
+
+.nofication-container {
+  background: $bg-light;
+  height: 100%;
+  h2 {
+    color: $mw-primary;
+    font-weight: 600;
+  }
+}
+
+.nofication-head {
+  align-items: center;
+  justify-content: space-between;
+
+  .input-container {
+    background-color: $group;
+    border-radius: 1.5rem;
+    padding: 0;
+    align-items: center;
+    position: relative;
+
+    i {
+      position: absolute;
+      right: 0.5rem;
+    }
+  }
+
+  .input-container:focus {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+
+  input {
+    background-color: transparent;
+    border: none;
+    padding: 0.3rem 1rem;
+    border-radius: 1.5rem;
+  }
+
+  input:focus {
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+}
+
+.card-container {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1rem;
+  height: auto;
+  .card-wrapper {
+    width: 25%;
+    height: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+  }
+
+  .notification-card {
+    border-left: 4px solid;
+    &.info { border-left-color: $mw-primary; }
+    &.success { border-left-color: #30b48a; }
+    &.warning { border-left-color: #f0ad4e; }
+    &.danger { border-left-color: #d9534f; }
+    transition: ease 0.5s;
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+  }
+
+}
+

@@ -1,0 +1,46 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+
+.card-flex {
+  max-width: 30px;
+  background-color: $text-muted;
+  background-color: #f4b313;
+}
+
+.card-custom {
+  display: block;
+  flex-direction: row;
+}
+
+.card {
+  display: flex;
+  max-width: 280px;
+}
+
+.card-body {
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.card-body h5, p{
+  color: $mw-primary;
+}
+
+.card-body p{
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+
+.card-body h5{
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding-left: 1.4rem;
+}
+
+.card-body i{
+  position: absolute;
+  left: 0;
+}

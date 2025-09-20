@@ -1,0 +1,112 @@
+<div class=" card-body flex-column card-container">
+
+  <!-- Lista de crianças sob tutela -->
+  <div class="children-list">
+    <h3>Crianças Sob Tutela</h3>
+  </div>
+  <!-- children.component.html -->
+  <div *ngIf="loading">Carregando...</div>
+<table class="table table-striped" *ngIf="!loading">
+  <thead>
+    <tr>
+      <th>Criança</th>
+      <th>Idade</th>
+      <th>Família</th>
+      <!-- <th>Responsáveis</th> -->
+      <th class="d-flex align-items-center justify-content-center">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of children">
+      <td>{{ item.child.name }} {{ item.child.surname }} </td>
+      <td>{{ item.child.age }} anos</td>
+      <td>{{ item.child.family.name }}</td>
+      <!-- <td> {{''}} </td> -->
+      <td>
+        <div class="btn-group d-flex align-items-center justify-content-center actions" role="group">
+          <button class="btn btn-primary" >
+            <i class="bi bi-clipboard-check "></i>
+            Tarefas
+          </button>
+          <button class="btn btn-success" >
+            <i class="bi bi-chat-right-quote "></i>
+            FeedBack
+          </button>
+          <button class="btn btn-warning" >
+            <i class="bi bi-columns "></i>
+            Guia
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  <div *ngIf="children.length === 0">Nenhuma criança encontrada.</div>
+  <hr>
+  <!-- Formulário para adicionar criança -->
+
+  <!-- Lista de famílias -->
+  <div class="family-list">
+    <h3>Famílias Cadastradas</h3>
+  </div>
+  <!-- families.component.html -->
+  <div *ngIf="loading">Carregando...</div>
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <!-- Texto de quantos itens -->
+    <div>
+      Mostrando {{ startIndex }} a {{ endIndex }} de {{ total }}
+    </div>
+
+    <!-- Botões anteriores/próximos -->
+    <div>
+      <button class="btn btn-secondary me-2"
+              [disabled]="page === 1"
+              (click)="prevPage()">
+        Anterior
+      </button>
+      <button class="btn btn-secondary"
+              [disabled]="endIndex === total"
+              (click)="nextPage()">
+        Próxima
+      </button>
+    </div>
+  </div>
+  <table class="table" *ngIf="!loading">
+
+    <thead>
+      <tr>
+        <th>Família</th>
+        <th>Membros</th>
+        <th>Crianças</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let family of families">
+        <td>{{ family.name }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let member of family.members">
+               {{ member.role }}: {{ member.member.name }} {{ member.member.surname }}
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let child of family.children">
+              {{ child.name }} {{ child.surname }} ({{ child.age }} anos)
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="families.length === 0">Nenhuma família encontrada.</div>
+
+
+</div>
+
+
+
+
+
+

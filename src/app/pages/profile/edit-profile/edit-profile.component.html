@@ -1,0 +1,117 @@
+<div class="card container-fluid">
+  <div class="card-header bg-light card-header-tabs mb-4   d-flex flex-column align-items-center justify-content-center">
+    <h3>Dados de Perfil <i class="bi bi-pencil-square"></i></h3>
+    <hr class="w-75">
+  </div>
+  <div class="card-img-overlay ">
+    <a href="/personal/profile" class="text-decoration-none fs-5">
+      <i class="bi bi-back ">Voltar</i>
+    </a>
+  </div>
+  <div class="card-container d-flex gap-3 justify-content-center align-items-start">
+    <div class=" card card-body rounded">
+      <div class="card-header ">
+        <h5>Cadastre seus filhos aqui!</h5>
+      </div>
+      <div class="card-img-overlay">
+        <i class="bi bi-person-arms-up"></i>
+      </div>
+      <div class="card-text m-2">
+        <h6>Informações para o cadastro:</h6>
+        <ul>
+          <li>Nome completo</li>
+          <li>N° do registro (se houver)</li>
+          <li>Idade</li>
+          <li>N° da família criada</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-group btn-outline-success  align-items-center justify-content-center ">
+          Clique Aqui
+        </button>
+      </div>
+    </div>
+    <div class="card card-body w-auto rounded">
+      <div class="card-header ">
+        <h5>Registre sua família aqui!</h5>
+      </div>
+      <div class="card-img-overlay ">
+        <i class="bi bi-person-raised-hand fs-5   "></i>
+      </div>
+      <div class="card-text m-2">
+        <h6>Observações para o cadastro:</h6>
+        <ul>
+          <li>Nome da Família.</li>
+          <li>Cadastre pelo menos um membro (Pai, mãe ou pessoa responsável).</li>
+          <li>Anote o número da Família quando concluir.</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-group btn-outline-success  align-items-center justify-content-center ">
+          Clique Aqui
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class=" mt-5 align-items-center justify-content-center flex-column">
+    <h3 class="card-title card-header">Informações Pessoais</h3>
+    <div class="d-flex flex-wrap align-items-center justify-content-evenly">
+      <div class="d-flex flex-column p-4 w-100 mb-0">
+        <h6 class="card-title card-header bg-light">Informações Básicas</h6>
+        <form action="submit" class="d-flex flex-wrap w-100 gap-4 mb-5">
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="name">Nome:</label>
+            <input type="text" name="name" id="name" class="input-group-text ">
+          </div>
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="surname">Sobrenome:</label>
+            <input type="text" name="surname" id="surname" class="input-group-text ">
+          </div>
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" class="input-group-text ">
+          </div>
+          <div>
+            <button class="w-auto btn btn-group btn-outline-success">Salvar <i class="bi bi-save  ms-2"></i></button>
+          </div>
+        </form>
+        <h6 class="card-title card-header bg-light">Informações de Contato</h6>
+        <form action="submit" class="d-flex flex-wrap w-100 gap-4 mb-5">
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="telephone">Telefone:</label>
+            <input type="text" name="telephone" id="telephone" class="input-group-text ">
+          </div>
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="smartphone">Celular:</label>
+            <input type="text" name="smartphone" id="smartphone" class="input-group-text ">
+          </div>
+          <div>
+            <button class="w-auto btn btn-group btn-outline-success">Salvar <i class="bi bi-save  ms-2"></i></button>
+          </div>
+        </form>
+        <h6 class="card-title card-header bg-light">Informações de Endereço</h6>
+        <form action="submit" class="d-flex flex-wrap w-100 gap-4 mb-5">
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="address">Endereço:</label>
+            <input type="text" name="address" id="address" class="input-group-text ">
+          </div>
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="country">País:</label>
+            <input type="text" name="country" id="country" class="input-group-text ">
+          </div>
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="state">Estado:</label>
+            <input type="text" name="state" id="state" class="input-group-text ">
+          </div>
+          <div class="d-flex gap-1 align-items-start flex-column ">
+            <label for="city">Cidade:</label>
+            <input type="text" name="city" id="city" class="input-group-text ">
+          </div>
+          <div>
+            <button class="w-auto btn btn-group btn-outline-success">Salvar <i class="bi bi-save  ms-2"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

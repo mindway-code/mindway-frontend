@@ -1,0 +1,80 @@
+$primary:  #006c70;
+$accent:   #f4b313;
+$bg-light: #f4f7f6;
+$text-muted: #6c757d;
+
+form {
+  // border: 1px solid black;
+  padding: 0.5rem;
+
+  @media (max-width: 776px) {
+
+    .card-header {
+      width: 100%;
+    }
+    padding: 0rem;
+    margin: 0;
+    width: 100%;
+  }
+
+  button {
+    border: none;
+  }
+  z-index: 10;
+}
+
+
+
+  .container-fluid {
+    min-height: 105vh;
+    background-color: $bg-light;
+
+  @media (max-width: 776px) {
+    padding: 0rem;
+    margin: 0rem;
+  }
+
+    h3, h5, h6 {
+      color: $primary;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0.5rem 0.5rem;
+      width: auto;
+      font-weight: 500;
+    }
+    .card-text {
+      min-height: 20vh;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+.card-container {
+  width: 100%;
+  // border: 1px solid black;
+  flex-wrap: wrap;
+
+  .card {
+    border-left: 5px solid $accent;
+    max-width: 40%;
+    min-width: 16rem;
+    transition: ease 0.5s;
+    &:hover {
+      transform: translateY(00.5rem);
+      box-shadow: 1px 2px 0px 0px rgba( 0, 0, 0, 0.15);
+    }
+  }
+}
+
+input {
+  border: 0.5px solid #ccc;
+  outline: none;
+  min-width: 15rem;
+}

@@ -1,0 +1,94 @@
+<nav class="navbar custom-navbar fixed-top">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <!-- Toggle do Offcanvas -->
+    <button
+      class="btn btn-icon"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#sideMenu"
+      aria-controls="sideMenu"
+      data-bs-scroll="true"
+    >
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Logo Centrallizado -->
+    <a class="navbar-brand mx-auto d-flex align-items-center" routerLink="/">
+      <img src="assets/img/mindway-login-hero.png" alt="MindWay Logo" class="navbar-logo">
+      <span class="brand-text">MindWay</span>
+    </a>
+
+    <div class="actions">
+      <!-- Ações de Login/Logout -->
+    <ng-container *ngIf="!(user$ | async); else loggedTpl">
+      <div class="nav-auth-buttons">
+        <a class="btn btn-login"   routerLink="/login">Entrar</a>
+        <a class="btn btn-register" routerLink="/register">Registrar</a>
+      </div>
+    </ng-container>
+    </div>
+    <!-- Ações Rápidas: Busca, Notificações e Avatar -->
+    <ng-template #loggedTpl>
+      <div class="d-flex align-items-center gap-3">
+        <div class="search-wrapper d-none d-md-flex align-items-center">
+          <i class="bi bi-search"></i>
+          <input type="text" class="form-control form-control-sm search-input" placeholder="Buscar...">
+        </div>
+        <a href="/personal/notification" class="btn btn-icon position-relative">
+          <i class="bi bi-bell"></i>
+          <span class="badge badge-notif">3</span>
+        </a>
+        <a href="/personal/notification" class="btn btn-icon position-relative">
+          <i class="bi bi-bell-slash"></i>
+        </a>
+        <div class="dropdown">
+          <a
+            class="btn btn-icon dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img src="assets/img/perfil_1-removebg-preview.png" alt="Avatar" class="avatar">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="/personal/profile">Perfil</a></li>
+            <li><a class="dropdown-item" routerLink="/personal/history">Histórico</a></li>
+            <li><a class="dropdown-item" routerLink="/personal/task">Tarefas</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger"  (click)="logout()">Sair</a></li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</nav>
+
+<!-- Offcanvas Lateral -->
+<div
+  class="offcanvas offcanvas-start side-menu"
+  tabindex="-1"
+  id="sideMenu"
+  aria-labelledby="sideMenuLabel"
+  data-bs-scroll="true"
+>
+  <div class="offcanvas-body p-0 pt-5">
+    <ul class="nav flex-column">
+      <hr class="text-warning ">
+      <li
+        class="nav-item"
+        *ngFor="let item of therapist"
+      >
+        <a
+          class="nav-link"
+          [routerLink]="item.link"
+          routerLinkActive="active"
+        >
+          <i class="{{ item.icon }} fs-4 me-2"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+      <hr class="text-warning ">
+    </ul>
+  </div>
+</div>

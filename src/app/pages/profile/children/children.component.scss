@@ -1,0 +1,40 @@
+$primary:  #006c70;
+$accent:   #f4b313;
+$bg-light: #f4f7f6;
+$text-muted: #6c757d;
+
+.container-fluid {
+  min-height: 95vh;
+  background-color: $bg-light;
+
+  h3, h5 {
+    color: $primary;
+  }
+  .card {
+    border-left: 5px solid $accent;
+    max-width: 40%;
+    min-width: 15rem;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0.5rem 0.5rem;
+      width: auto;
+      font-weight: 500;
+    }
+  }
+  .card-text {
+    min-height: 20vh;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.card-container {
+  max-width: 30%;
+}

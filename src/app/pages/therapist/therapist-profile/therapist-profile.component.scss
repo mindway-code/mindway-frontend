@@ -1,0 +1,62 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+
+.profile-head {
+  // border: 1px solid black;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  div {
+    width: auto;
+    margin-inline: 2rem;
+  }
+
+  h5 {
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: $mw-primary;
+  }
+
+  a {
+    font-weight: 300;
+    font-style: oblique;
+  }
+
+  i {
+    font-size: 1.2rem;
+    color: $mw-primary;
+  }
+}
+
+.btn-group {
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+  background-color: transparent;
+}
+
+.btn-group:hover {
+  background-color: rgba(11, 12, 14, 0.1);
+  color: $mw-primary;
+  i {
+    color: $mw-primary !important;
+  }
+}
+
+.tab-active {
+  background-color: $mw-primary;
+  color: $bg-light;
+
+  i {
+    color: $bg-light !important;
+  }
+}
+
+.card-container {
+  width: 97%;
+  min-height: 30vh;
+  align-items: stretch;
+  justify-content: stretch;
+}

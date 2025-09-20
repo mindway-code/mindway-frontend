@@ -1,0 +1,83 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+$border:      #4345444b;
+$group:       #fff;
+
+.help-container {
+  background: $bg-light;
+  // border-left: 4px solid $mw-accent;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  // box-shadow: 0 2px 8px rgba($border, 0.3);
+
+  h3 {
+    color: $mw-primary;
+    margin-bottom: 1rem;
+  }
+
+  .search-box {
+    position: relative;
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+      border: 1px solid rgba($mw-accent, 0.5);
+      border-radius: 0.25rem;
+      background: $group;
+      color: $text-muted;
+
+      &:focus {
+        outline: none;
+        border-color: $mw-primary;
+      }
+    }
+
+    i.bi-search {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba($text-muted, 0.7);
+    }
+  }
+
+  .faq-list {
+    margin-bottom: 1.5rem;
+
+    .accordion-button {
+      color: $mw-primary;
+      &.collapsed {
+        background: $group;
+        color: $text-muted;
+      }
+    }
+
+    .accordion-body {
+      color: $text-muted;
+      background: $group;
+    }
+  }
+
+  .no-results {
+    p {
+      color: $text-muted;
+    }
+  }
+
+  .contact-support {
+    p {
+      font-size: 0.9rem;
+      color: $text-muted;
+      a {
+        color: $mw-accent;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

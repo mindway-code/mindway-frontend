@@ -1,0 +1,67 @@
+<div class="notification-container container-fluid">
+  <!-- Header com busca e ação -->
+  <div class="notification-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+    <div>
+      <h2 class="notification-title">Notificações</h2>
+      <p class="text-muted mb-0">Fique por dentro das atualizações importantes.</p>
+    </div>
+    <div class="d-flex align-items-center mt-3 mt-md-0">
+      <div class="search-wrapper me-3">
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="🔍 Buscar notificações..."
+          [(ngModel)]="searchTerm"
+        />
+        <i class="bi bi-search"></i>
+      </div>
+      <button
+        class="btn btn-clear-all btn-outline-danger"
+        (click)="clearAll()"
+        title="Limpar todas"
+      >
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </div>
+  </div>
+
+<!-- Container Flexível de Notifications -->
+<div class="cards-flex">
+  <ng-container *ngIf="filteredNotifications().length; else emptyState">
+    <div *ngFor="let notif of filteredNotifications()" class="card-wrapper">
+      <div class="card notification-card h-100" [ngClass]="notif.type">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex align-items-center mb-2">
+            <div class="icon-wrapper me-2">
+              <i class="{{ iconClass(notif.type) }}"></i>
+            </div>
+            <h6 class="card-title mb-0">{{ notif.title }}</h6>
+          </div>
+          <p class="card-text flex-grow-1">{{ notif.message }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <small class="text-muted">{{ notif.date | date:'dd/MM/yyyy HH:mm' }}</small>
+            <button
+              *ngIf="!notif.read"
+              class="btn btn-sm btn-mark-read"
+              (click)="markAsRead(notif)"
+              title="Marcar como lida"
+            >
+              <i class="bi bi-chevron-double-down"></i>
+            </button>
+            <span *ngIf="notif.read" class="badge rounded-pill bg-secondary">Lida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Estado vazio -->
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <i class="bi bi-bell-slash fs-1 text-muted"></i>
+      <p class="mt-3 text-muted">Nenhuma notificação encontrada</p>
+    </div>
+  </ng-template>
+</div>
+
+</div>

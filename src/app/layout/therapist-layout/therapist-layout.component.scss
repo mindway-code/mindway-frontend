@@ -1,0 +1,134 @@
+/* Paleta MindWay */
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$txt-light:   #fff;
+$txt-muted:   #e0e0e0;
+
+.therapist-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+
+  .sidebar {
+    width: 100%;
+    background: $mw-primary;
+    color: $txt-light;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    gap: 1rem;
+
+    .brand {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      img {
+        height: 40px;
+        margin-right: 0.5rem;
+      }
+      span {
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+    }
+
+    .menu {
+      display: flex;
+      flex: 1;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          padding: 0.75rem 1.25rem;
+          color: $txt-light;
+          text-decoration: none;
+          border-left: 4px solid transparent;
+          transition: background 0.2s, border-color 0.2s;
+
+          i {
+            font-size: 1.25rem;
+          }
+          .label {
+            flex: 1;
+          }
+
+          &:hover {
+            background: rgba(255,255,255,0.1);
+          }
+          &.active {
+            background: $mw-accent;
+            color: $mw-primary;
+            border-left-color: $mw-accent;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  .link {
+    transition: background 0.2s, border-color 0.2s;
+    padding: 0.5rem;
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+  }
+
+  .content {
+    flex: 1;
+    background: $bg-light;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+}
+
+.tab-active {
+  // background: $mw-accent;
+  color: $mw-primary;
+  border-bottom: 5px solid;
+  border-radius: 5px;
+  border-bottom-color: $mw-accent;
+  font-weight: 600;
+  @media(max-width: 768px) {
+    font-size: 0.75rem;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .therapist-layout {
+    flex-direction: column;
+    .sidebar {
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      padding: 0.5rem;
+      .brand { display: none; }
+      .menu {
+        display: flex;
+        li {
+          a {
+            padding: 0.5rem;
+            flex-direction: column;
+            i { margin: 0; }
+            .label { font-size: 0.75rem; }
+          }
+        }
+      }
+    }
+    .content {
+      padding: 1rem;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<div class="d-flex flex-column bg-body p-2 align-items-center">
+  <div>
+    <!-- <i class="bi bi-emoji-smile"></i> -->
+  </div>
+  <h1 id="therapist">Bem vindo, Terapeuta!</h1>
+  <div class="profile-head d-flex mt-5   w-100 ">
+    <div class="profile d-flex flex-column align-items-center">
+
+      <a
+        (click)="setActiveComponent('information')"
+      [ngClass]="{ 'tab-active': activeComponent === 'information' }"
+        class="btn btn-group">
+        Minhas Informações<i class="ms-4 bi bi-pencil-square"></i>
+      </a>
+    </div>
+    <div class="preferences d-flex flex-column align-items-center">
+
+      <a
+        (click)="setActiveComponent('preference')"
+        [ngClass]="{ 'tab-active': activeComponent === 'preference' }"
+        class="btn btn-group text-decoration-none">
+        Preferências de Perfil<i class="ms-4 bi bi-gear "></i>
+      </a>
+    </div>
+    <div class="preferences d-flex flex-column align-items-center">
+
+        <a
+          (click)="setActiveComponent('notification')"
+          [ngClass]="{ 'tab-active': activeComponent === 'notification' }"
+          class="btn btn-group text-decoration-none">
+          Notificações <i class="ms-4 bi bi-info-circle "></i>
+        </a>
+    </div>
+    <div class="preferences d-flex flex-column align-items-center">
+
+        <a
+          (click)="setActiveComponent('help')"
+          [ngClass]="{ 'tab-active': activeComponent === 'help' }"
+          class="btn btn-group text-decoration-none">
+          Ajuda? <i class="ms-4 bi bi-question-circle  "></i>
+        </a>
+    </div>
+  </div>
+  <div class="card-container   d-flex flex-grow-1 flex-row">
+    <div class="card card-body d-flex  w-100">
+      <div *ngIf="activeComponent === 'information'">
+        <app-information class="mb-2"></app-information>
+      </div>
+      <div *ngIf="activeComponent === 'preference'">
+        <app-preference class="mb-2"></app-preference>
+      </div>
+      <div *ngIf="activeComponent === 'notification'">
+        <app-notification-therapist class="mb-2 w-100"></app-notification-therapist>
+      </div>
+      <div *ngIf="activeComponent === 'help'">
+        <app-help class="mb-2"></app-help>
+      </div>
+    </div>
+  </div>
+</div>
