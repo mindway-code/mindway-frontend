@@ -23,6 +23,7 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
 import { AuthTherapistGuard } from './auth/guard/therapist.guard';
 import { TeacherComponent } from './pages/teacher/teacher.component';
 import { ClientAppointmentsComponent } from './pages/client-appointments/client-appointments.component';
+import { SocialNetworkComponent } from './pages/social-network/social-network.component';
 
 const routes: Routes = [
   // Rota para as páginas com layout comum
@@ -35,6 +36,7 @@ const routes: Routes = [
       // outras rotas que devem usar o CommonLayoutComponent
     ],
   },
+  { path: 'social-network', component: SocialNetworkComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
