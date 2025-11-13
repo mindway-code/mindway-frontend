@@ -1,49 +1,131 @@
-<div class="information-container d-flex flex-column p-4">
-  <div>
-    <h3>Informações de Perfil</h3>
-  </div>
-  <div class="card-body d-flex flex-row w-100 align-items-center justify-content-around ">
-    <div>
-      <p>Descrição do perfil profissional!</p>
+<div class="therapist-info-page">
+
+  <!-- 1. CTA -->
+  <section class="info-cta d-flex align-items-center justify-content-between p-4 mb-4">
+    <div class="cta-text">
+      <h2 class="fw-bold mb-2">Destaque sua trajetória!</h2>
+      <p class="lead mb-3">
+        Mantenha seu perfil atualizado e fortaleça sua reputação profissional. <br>
+        Gerencie suas informações, compartilhe certificados e potencialize suas conexões na MindWay.
+      </p>
+      <button class="btn btn-accent" (click)="showEditModal = true">
+        <i class="bi bi-pencil-square me-1"></i>
+        Edite suas informações pessoais
+      </button>
     </div>
-    <div class="">
-      <i class="bi bi-person-circle text-secondary fs-1"></i>
+    <div class="cta-img">
+      <!-- Use sua imagem SORA aqui -->
+      <img src="assets/img/consult4.png" alt="Terapeuta" />
+      <div class="img-overlay"></div>
     </div>
-  </div>
-  <div class="card-body d-flex flex-row flex-wrap w-100 align-items-center justify-content-around ">
-    <button class="card p-2 d-flex flex-column align-items-center">
-      <div>
-        <i class="bi bi-mortarboard-fill text-secondary fs-1 "></i>
-      </div>
-      <div>
-        <h5>Meus Conhecimentos</h5>
-      </div>
-      <div>
-        <p>Clique para adicionar conhecimentos profissionais</p>
-      </div>
-    </button>
-    <button class="card p-2 d-flex flex-column align-items-center">
-      <div>
-        <i class="bi bi-mortarboard-fill text-secondary fs-1 "></i>
-      </div>
-      <div>
-        <h5>Ver feedbacks</h5>
-      </div>
-      <div>
-        <p>Clique para adicionar conhecimentos profissionais</p>
-      </div>
-    </button>
-    <button class="card p-2 d-flex flex-column align-items-center">
-      <div>
-        <i class="bi bi-mortarboard-fill text-secondary fs-1 "></i>
-      </div>
-      <div>
-        <h5>Meus Conhecimentos</h5>
-      </div>
-      <div>
-        <p>Clique para adicionar conhecimentos profissionais</p>
-      </div>
-    </button>
+  </section>
+
+  <!-- 2. Modal de edição de informações pessoais -->
+  <div class="modal-bg" *ngIf="showEditModal">
+    <div class="modal-card">
+      <h5 class="mb-4">Editar informações pessoais</h5>
+      <form [formGroup]="infoForm" (ngSubmit)="onSave()">
+        <div class="row g-2">
+          <div class="col-12 col-md-6 mb-2">
+            <label>Nome</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="col-12 col-md-6 mb-2">
+            <label>Sobrenome</label>
+            <input type="text" class="form-control" formControlName="surname">
+          </div>
+        </div>
+        <div class="mb-2">
+          <label>E-mail</label>
+          <input type="email" class="form-control" formControlName="email" >
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6" formGroupName="contact">
+            <label>Telefone</label>
+            <input type="text" class="form-control" formControlName="telephone" >
+          </div>
+          <div class="col-6" formGroupName="contact">
+            <label>Celular</label>
+            <input type="text" class="form-control" formControlName="smartphone" >
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-8" formGroupName="address">
+            <label>Endereço</label>
+            <input type="text" class="form-control" formControlName="address_name" >
+          </div>
+          <div class="col-4" formGroupName="address">
+            <label>Número</label>
+            <input type="text" class="form-control" formControlName="address_number" >
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-md-6" formGroupName="address">
+            <label>País</label>
+            <input
+              type="text"
+              class="form-control mb-2"
+              placeholder="Pesquisar país..."
+              [(ngModel)]="countrySearchTerm"
+              [ngModelOptions]="{standalone: true}"
+              autocomplete="off"
+            >
+            <select class="form-select" formControlName="country">
+              <option value="">Selecione o país</option>
+              <option *ngFor="let pais of filteredCountries" [value]="pais">
+                {{ pais }}
+              </option>
+            </select>
+          </div>
+          <div class="col-4" formGroupName="address">
+            <label>CEP</label>
+            <input type="text" class="form-control" formControlName="cep" >
+          </div>
+          <div class="col-4" formGroupName="address">
+            <label>Estado</label>
+            <input type="text" class="form-control" formControlName="state" >
+          </div>
+          <div class="col-4" formGroupName="address">
+            <label>Cidade</label>
+            <input type="text" class="form-control" formControlName="city" >
+          </div>
+        </div>
+        <div class="mt-3 d-flex gap-2">
+          <button class="btn btn-success text-white w-100" [disabled]="saving">
+            {{ saving ? 'Salvando...' : 'Salvar' }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary w-100" (click)="onCancel()">Cancelar</button>
+        </div>
+        <div class="text-success mt-2" *ngIf="successMessage">{{ successMessage }}</div>
+        <div class="text-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</div>
+      </form>
+      <button class="btn btn-close position-absolute top-0 end-0 m-2" (click)="showEditModal = false"></button>
+    </div>
   </div>
 
+  <!-- 3. Upload e mural de certificados -->
+  <section class="certificados-mural p-4 mt-4 ">
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+      <h4 class="mb-0">Meus Certificados &amp; Cursos</h4>
+      <label class="upload-label btn btn-outline-success  mb-0">
+        <i class="bi bi-cloud-upload"></i>
+        Enviar certificado
+        <input type="file" accept="application/pdf,image/*" hidden (change)="onUploadCert($event)">
+      </label>
+    </div>
+    <div class="certificados-gallery d-flex flex-wrap gap-3">
+      <div class="cert-card" *ngFor="let cert of certificates">
+        <ng-container *ngIf="cert.type === 'pdf'; else imgBlock">
+          <embed [src]="cert.url" type="application/pdf" width="100%" height="140">
+        </ng-container>
+        <ng-template #imgBlock>
+          <img [src]="cert.url" alt="Certificado" />
+        </ng-template>
+        <div class="cert-footer">
+          <span>{{ cert.name }}</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="certificates.length === 0" class="text-muted mt-2">Nenhum certificado enviado ainda.</div>
+  </section>
 </div>

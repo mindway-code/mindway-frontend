@@ -3,10 +3,18 @@ $mw-accent:   #f4b313;
 $bg-light:    #f4f7f6;
 $text-muted:  #6c757d;
 
+div {
+  h1, h2, h3, h4, h5, h6 {
+    color: $mw-primary;
+    font-weight: 700;
+  }
+}
+
 .profile-head {
   // border: 1px solid black;
   align-items: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 
   div {
     width: auto;
@@ -27,6 +35,28 @@ $text-muted:  #6c757d;
   i {
     font-size: 1.2rem;
     color: $mw-primary;
+  }
+  .preferences {
+    a {
+      i {
+        margin-left: .6rem;
+      }
+    }
+
+    @media (max-width: 958px) {
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid $mw-accent;
+        i {
+          margin-left: 0;
+        }
+      }
+      b {
+        display: none;
+      }
+    }
   }
 }
 

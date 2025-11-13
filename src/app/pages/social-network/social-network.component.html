@@ -1,5 +1,16 @@
-<div class="network-container d-flex  flex-row text-center">
-  <div class="side-bar d-flex flex-column align-items-center">
+<div class="network-container d-flex text-center">
+  <div class="side-bar-button">
+    <a class="btn " (click)="toggleSidebar()">
+      <i class="bi bi-chevron-compact-right "></i>
+    </a>
+  </div>
+  <div class="side-bar " [class.hide]="sidebarOpen" >
+    <div class="d-flex w-100 align-self-start px-2">
+      <a (click)="navigateBack()" class="text-decoration-none text-white back"><i class="bi bi-chevron-double-left">Voltar</i></a>
+    </div>
+    <button class="close-btn d-lg-none" (click)="toggleSidebar()">
+      <i class="bi bi-x-lg"></i>
+    </button>
     <div class="side-bar-logo">
       <img src="assets/img/rede2.png" alt="Rede de Apoio" class="img-fluid" style="max-width: 200px;">
     </div>
@@ -7,23 +18,68 @@
     <div>
       <h3 class="text-white mb-4">Minhas Redes!</h3>
     </div>
-    <div class="d-flex flex-row w-100 justify-content-between">
-      <div class="d-flex flex-row align-items-center input-group gap-2">
+    <div class="d-flex flex-column w-100 align-items-center justify-content-center">
+      <div class="d-flex flex-row align-items-center inputGroup gap-2">
         <i class="bi bi-search fs-6"></i>
         <input type="text" placeholder="Pesquisar Rede" class="" />
       </div>
+      <div class="add-social-container d-flex flex-column gap-2 align-items-center justify-content-center my-2" *ngIf="profileId !== 1">
+        <button class="d-flex align-items-center gap-2 btn fw-bolder add-social" (click)="this.openSocialAdd(true)">
+          Criar Rede
+          <i class="bi bi-plus-circle-fill"></i>
+        </button>
+        <button class="d-flex align-items-center gap-2 btn fw-bolder add-social" (click)="this.openSocialDelete(true)">
+          Deletar Rede
+          <i class="bi bi-trash-fill "></i>
+        </button>
+      </div>
     </div>
+    <div class="social d-flex flex-column w-100 align-items-center gap-3">
+        <ul class="social-list list-group mt-4 ">
+          <li class="list-group-item " *ngFor="let net of networks">
+            <div class="d-flex flex-column social-container">
+              <p class="">{{ net.name }}</p>
+              <div class="d-flex gap-3 social-options">
+                <button class="btn open" (click)="openChatModal(net)">
+                  Chat
+                  <i class="bi bi-chat-fill "></i>
+                </button>
+                <button class="btn member" (click)="openMembersModal(net)">
+                  Membros
+                  <i class="bi bi-people-fill "></i>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
 
+        <nav *ngIf="meta && meta.totalPages > 1">
+          <ul class="pagination">
+            <li class="page-item" [class.disabled]="meta.currentPage === 1">
+              <button class="page-link" (click)="loadNetworks(meta.currentPage - 1)">Anterior</button>
+            </li>
+            <li class="page-item" *ngFor="let i of [].constructor(meta.totalPages); let idx = index"
+                [class.active]="meta.currentPage === idx + 1">
+              <button class="btn btn-success" (click)="loadNetworks(idx + 1)">{{ idx + 1 }}</button>
+            </li>
+            <li class="page-item" [class.disabled]="meta.currentPage === meta.totalPages">
+              <button class="page-link" (click)="loadNetworks(meta.currentPage + 1)">Próxima</button>
+            </li>
+          </ul>
+        </nav>
+    </div>
   </div>
-  <div class="chat-container">
+  <div class="chat-container" *ngIf="!open">
     <img
       class="bgImg"
-      src="../../../assets/img/rede.png"
+      src="../../../assets/img/rede2.png"
       alt=""
       aria-hidden="true"
     />
     <div class="chat-container-header w-100">
-        <h1 class="mb-4">Bem-vindo à Rede de Apoio MindWay</h1>
+        <h4 class="mb-4">Bem-vindo à Rede de Apoio MindWay <br>
+        <small class="fs-6 ">Olá, {{user?.name}} {{user?.surname}} !</small>
+        </h4>
         <hr class="w-75">
         <p class=" mb-2 text-left">
           Conecte-se com sua rede de apoio, compartilhe experiências, tire dúvidas e encontre suporte em nossa
@@ -35,10 +91,256 @@
     </div>
     <div class="chat-box d-flex w-100">
       <div class="chat-box-options d-flex gap-4">
-        <button>Abrir Chat <i class="bi bi-plus-circle  "></i></button>
-        <button>Pesquisar Chat <i class="bi bi-chat"></i></button>
-        <button>Chat <i class="bi bi-chat"></i></button>
+        <button (click)="openChat(true)">Abrir Chat <i class="bi bi-chat-text-fill "></i></button>
+        <button (click)="navigateBack()">Voltar <i class="bi bi-door-open-fill  "></i></button>
       </div>
     </div>
   </div>
+  <div class="chat-window " *ngIf="open">
+    <div class="chat-window-header px-2">
+      <h4>Envie sua mensagem...</h4>
+      <button class="btn text-white" (click)="closeChat()">
+        Fechar <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <div class="chat-window-body">
+      <img src="../../../assets/img/rede2.png" alt="rede" class="bgImg2">
+      <div class="body-temp  w-100 gap-4" #chatBody>
+        <h5>{{ selectedNetwork?.name || 'Selecione uma rede e comece esta jornada!'}}</h5>
+        <button class="btn btn-warning  " (click)="loadMoreMessages()" *ngIf="messages.length >= limit">Carregar mais</button>
+        <i class="message " *ngFor="let msg of messages"
+            [ngClass]=
+            "{
+              'message-right': msg.user_id === userId || msg.user?.id === userId,
+              'message-left': msg.user_id !== userId && msg.user?.id !== userId
+            }"
+          >
+          <div class="d-flex flex-column align-items-start">
+            <!-- <p class="text-white"> {{msg.user_id}} </p> -->
+            <b>{{ msg.user?.name || user?.name }}:</b>
+            <span class="fst-normal ">{{ msg.content }}</span>
+          </div>
+          <small class="w-100">{{ msg.created_at | date:'short' }}</small>
+        </i>
+      </div>
+    </div>
+    <div class="chat-window-send" *ngIf="openSocial">
+      <form class="d-flex w-100 align-content-center justify-content-center" (ngSubmit)="sendMessage()">
+        <input type="text" [(ngModel)]="message" name="message" id="message" placeholder="Digite sua mensagem...">
+        <button class="btn" type="submit" >
+          <i class="bi bi-arrow-right-circle-fill text-white"></i>
+        </button>
+      </form>
+    </div>
+  </div>
 </div>
+
+<!-- MODAL DE CRIAÇÃO DE REDE -->
+<div class="modal-bg" *ngIf="openModalAdd">
+  <div class="modal-card">
+    <h4>Criar Rede de Apoio</h4>
+    <form [formGroup]="formCreateNetwork" (ngSubmit)="onCreateNetwork()">
+      <div class="mb-3">
+        <label>Nome da Rede <span class="text-danger">*</span></label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="name"
+          [class.is-invalid]="formCreateNetwork.get('name')?.invalid && formCreateNetwork.get('name')?.touched"
+          maxlength="80"
+          placeholder="Digite o nome da rede"
+        />
+        <div class="invalid-feedback" *ngIf="formCreateNetwork.get('name')?.hasError('required') && formCreateNetwork.get('name')?.touched">
+          O nome é obrigatório.
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline-secondary" (click)="openModalAdd = false">Cancelar</button>
+        <button type="submit" class="btn btn-primary mw-btn" [disabled]="formCreateNetwork.invalid || creatingNetwork">
+          {{ creatingNetwork ? 'Criando...' : 'Criar' }}
+        </button>
+      </div>
+      <div class="text-success mt-2" *ngIf="createNetworkSuccess">{{ createNetworkSuccess }}</div>
+      <div class="text-danger mt-2" *ngIf="createNetworkError">{{ createNetworkError }}</div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DELETAR REDE -->
+<div class="modal-bg" *ngIf="openModalDelete">
+  <div class="modal-card">
+    <h4>Remover Rede de Apoio</h4>
+    <p class="text-muted mb-3">Selecione a rede que deseja remover. Atenção: esta ação não poderá ser desfeita.</p>
+
+    <ul class="list-group mb-3">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+        *ngFor="let net of networks"
+      >
+        <span>
+          <b>{{ net.name }}</b>
+        </span>
+        <button class="btn btn-danger btn-sm d-flex flex-row align-items-center justify-content-center gap-1" (click)="onDeleteNetwork(net)">
+          <i class="bi bi-trash h-100"></i>
+          <b class="h-100">Remover</b>
+
+        </button>
+      </li>
+    </ul>
+
+    <!-- PAGINAÇÃO -->
+    <nav *ngIf="meta && meta.totalPages > 1">
+      <ul class="pagination justify-content-center mb-2">
+        <li class="page-item" [class.disabled]="meta.currentPage === 1">
+          <button class="page-link" (click)="loadNetworks(meta.currentPage - 1)">Anterior</button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let i of [].constructor(meta.totalPages); let idx = index"
+          [class.active]="meta.currentPage === idx + 1">
+          <button class="page-link" (click)="loadNetworks(idx + 1)">
+            {{ idx + 1 }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="meta.currentPage === meta.totalPages">
+          <button class="page-link" (click)="loadNetworks(meta.currentPage + 1)">Próxima</button>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline-secondary" (click)="openModalDelete = false">Fechar</button>
+    </div>
+
+    <div class="text-success mt-2" *ngIf="deleteNetworkSuccess">{{ deleteNetworkSuccess }}</div>
+    <div class="text-danger mt-2" *ngIf="deleteNetworkError">{{ deleteNetworkError }}</div>
+  </div>
+</div>
+
+<!-- MODAL MEMBROS DA REDE -->
+<div class="modal-bg" *ngIf="openMember">
+  <div class="modal-card" style="max-width: 540px;">
+    <h4>Membros da Rede "{{ selectedNetwork?.name }}"</h4>
+
+    <div class="mb-3" *ngIf="members?.length === 0 else member">
+      <span class="text-muted">Nenhum membro encontrado nesta rede.</span>
+    </div>
+
+    <ng-template #member>
+      <ul class="list-group mb-3" >
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let member of members"
+        >
+          <span>
+            <b>{{ member.user?.name }} {{ member.user?.surname }}</b>
+            <span class="badge rounded-pill bg-secondary ms-2" *ngIf="member.user.profile_id === 3">Terapeuta</span>
+            <span class="badge rounded-pill bg-info ms-2" *ngIf="member.user.profile_id === 1 || member.user.profile_id === 2">Cliente</span>
+            <!-- <span class="badge rounded-pill bg-dark ms-2" *ngIf="member.user.profile_id === 2">Admin</span> -->
+            <span class="badge rounded-pill bg-info ms-2" *ngIf="member.user.profile_id === 4">Core</span>
+          </span>
+          <button
+            class="btn btn-outline-danger btn-sm"
+            (click)="onRemoveMember(member)"
+            [disabled]="removingMemberId === member.id"
+            *ngIf="member.user?.id !== user?.id"
+          >
+            <i class="bi bi-person-x"></i>
+            Remover
+          </button>
+        </li>
+      </ul>
+    </ng-template>
+
+
+    <!-- Paginação -->
+    <nav *ngIf="membersMeta && membersMeta.totalPages > 1">
+      <ul class="pagination justify-content-center mb-2">
+        <li class="page-item" [class.disabled]="membersMeta.currentPage === 1">
+          <button class="page-link" (click)="loadMembers(selectedNetwork?.id, membersMeta.currentPage - 1)">Anterior</button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let i of [].constructor(membersMeta.totalPages); let idx = index"
+          [class.active]="membersMeta.currentPage === idx + 1">
+          <button class="page-link" (click)="loadMembers(selectedNetwork?.id, idx + 1)">
+            {{ idx + 1 }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="membersMeta.currentPage === membersMeta.totalPages">
+          <button class="page-link" (click)="loadMembers(selectedNetwork?.id, membersMeta.currentPage + 1)">Próxima</button>
+        </li>
+      </ul>
+    </nav>
+
+    <hr class="my-4" />
+
+    <div>
+      <h5>Adicionar Usuário à Rede</h5>
+      <div class="mb-3 d-flex align-items-center gap-2">
+        <input
+          class="form-control"
+          style="max-width: 280px;"
+          placeholder="Pesquisar usuário por nome"
+          [(ngModel)]="userSearchTerm"
+          (ngModelChange)="onSearchUsers()"
+          />
+        <button class="btn btn-secondary btn-sm" (click)="onSearchUsers()">Buscar</button>
+      </div>
+
+      <div *ngIf="usersLoading" class="text-muted mb-2">Carregando usuários...</div>
+      <div *ngIf="usersPage && usersPage.users.length === 0 && !usersLoading" class="text-muted mb-2">Nenhum usuário encontrado.</div>
+
+      <table class="table table-sm table-hover" *ngIf="usersPage && usersPage.users.length > 0">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of usersPage.users">
+            <td>{{ u.name }} {{ u.surname }}</td>
+            <td>{{ u.email }}</td>
+            <td>
+              <button class="btn btn-success btn-sm"
+                      (click)="onAddMember(u)"
+                      [disabled]="addingUserId === u.id">
+                <i class="bi bi-person-plus"></i> Adicionar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Paginação da tabela de usuários -->
+      <nav *ngIf="usersPage && usersPage.totalPages > 1">
+        <ul class="pagination justify-content-center mb-0">
+          <li class="page-item" [class.disabled]="usersPage.currentPage === 1">
+            <button class="page-link" (click)="loadUsers(usersPage.currentPage - 1)">Anterior</button>
+          </li>
+          <li class="page-item"
+              *ngFor="let i of [].constructor(usersPage.totalPages); let idx = index"
+              [class.active]="usersPage.currentPage === idx + 1">
+            <button class="page-link" (click)="loadUsers(idx + 1)">
+              {{ idx + 1 }}
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="usersPage.currentPage === usersPage.totalPages">
+            <button class="page-link" (click)="loadUsers(usersPage.currentPage + 1)">Próxima</button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="text-success mt-2" *ngIf="addUserSuccess">{{ addUserSuccess }}</div>
+      <div class="text-danger mt-2" *ngIf="addUserError">{{ addUserError }}</div>
+    </div>
+
+
+    <div class="modal-actions">
+      <button class="btn btn-outline-secondary" (click)="openMember = false">Fechar</button>
+    </div>
+  </div>
+</div>
+

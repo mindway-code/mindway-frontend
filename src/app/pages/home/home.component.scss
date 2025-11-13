@@ -9,12 +9,6 @@ $text-muted-color: #6c757d;
   background-color: #fff;
   border-radius: 10px;
   @media (max-width: 500px) {
-    h2 {
-      font-size: 1.5rem;
-    }
-    p {
-      font-size: 1.1rem;
-    }
     .btn {
       width: 80%;
       margin-bottom: 10px;
@@ -53,6 +47,7 @@ h2 {
     transform: translateY(-10px);
     box-shadow: 0 15px 3px rgba(0, 0, 0, 0.1);
   }
+
 }
 
 .card-title {
@@ -62,6 +57,9 @@ h2 {
 
 .card-body {
   padding: 20px;
+  .card-text {
+    text-align: center;
+  }
   @media (max-width: 500px) {
     padding: 10px;
   }

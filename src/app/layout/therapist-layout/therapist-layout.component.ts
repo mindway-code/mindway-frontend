@@ -19,6 +19,7 @@ interface MenuItem {
 export class TherapistLayoutComponent {
 
   classStyle: string = TherapistProfileComponent.classStyle;
+  mobileMenuOpen = false;
 
   constructor(
     private authService: AuthService,
@@ -28,7 +29,7 @@ export class TherapistLayoutComponent {
   menuItems: MenuItem[] = [
     { label: 'Guias',     link: '/therapist/guide',    icon: 'bi bi-book'         },
     { label: 'Agenda',    link: '/therapist/schedule', icon: 'bi bi-calendar2'    },
-    { label: 'Família',   link: '/therapist/family',   icon: 'bi bi-people-fill'  },
+    { label: 'Rede de Apoio',   link: '/social-network',   icon: 'bi bi-people-fill'  },
   ];
 
   setClass(classes: string) {
@@ -36,8 +37,12 @@ export class TherapistLayoutComponent {
     console.log(this.classStyle);
   }
 
-  logout() {
-    this.authService.logout();
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  exit() {
+    // this.authService.logout();
     this.router.navigate(['/']);
   }
 }

@@ -1,0 +1,93 @@
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+
+.calendar-month-table {
+  background: #f4f7f6;
+  border-radius: 1rem;
+  padding: 1rem;
+  max-width: 450px;
+  margin: 0 auto 2rem auto;
+}
+
+.calendar-weekdays {
+  display: flex;
+  gap: 0.2rem;
+  font-weight: bold;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+
+.calendar-weekday {
+  flex: 1 0 0;
+  text-align: center;
+  color: #006c70;
+  font-size: 1rem;
+}
+
+.calendar-weeks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.calendar-week {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.calendar-day {
+  flex: 1 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  min-height: 2.1rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  background: #fff;
+  color: #23232e;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+  transition: background 0.18s, color 0.18s;
+  position: relative;
+  margin: 0.06rem;
+  &.not-current-month {
+    opacity: 0.25;
+    cursor: default;
+    background: transparent;
+  }
+  &.has-appointment {
+    font-weight: bold;
+    border: 2px solid #f4b313;
+  }
+  &:hover:not(.not-current-month) {
+    background: #f4b313;
+    color: #23232e;
+    z-index: 2;
+  }
+}
+
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(35,35,46,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 320px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.11);
+}
+
+.appt-list {
+  max-height: 200px;
+  overflow-y: auto;
+}

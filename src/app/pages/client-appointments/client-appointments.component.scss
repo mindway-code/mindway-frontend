@@ -1,4 +1,288 @@
-.appt {
-  min-height: 50vh;
+
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted-color: #6c757d;
+$bg-color-dark: #23232e;
+
+div {
+  h1, h2, h3, h4, h5, h6 {
+    color: $mw-primary;
+    font-weight: 700;
+  }
 }
 
+.appt-container {
+  min-height: 80vh;
+  background-color: $bg-light;
+}
+
+
+.client-cta-container {
+  width: 100%;
+  min-height: 380px;
+  position: relative;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  padding-left: 2rem;
+
+  .client-cta-text {
+    z-index: 2;
+    h2 { color: $mw-primary; }
+    .btn-accent {
+      background: $mw-accent;
+      color: #23232e;
+      border: none;
+      font-weight: 600;
+      border-radius: 2em;
+      padding: 0.6em 2em;
+      transition: background .13s;
+      &:hover { background: darken($mw-accent, 10%); }
+    }
+    .cta-benefits li {
+      font-size: 1.04em;
+      margin-bottom: 0.33em;
+    }
+    .link-success {
+      cursor: pointer;
+    }
+  }
+
+  .client-cta-img {
+    flex: 1 1 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 240px;
+    img {
+      max-width: 360px;
+      opacity: 0.43;
+      border-radius: 30%;
+      z-index: 1;
+    }
+    .cta-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #fff0 10%, #f4b31315 80%);
+      z-index: 2;
+      pointer-events: none;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .client-cta-container {
+    flex-direction: column;
+    padding-top: 1.5rem;
+    padding-left: inherit;
+    padding-inline: 1rem;
+    .client-cta-img { margin-top: 1.5em; }
+    .client-cta-text {
+      .actions {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+
+
+.appointment-steps-container {
+  gap: 2.5rem;
+  .steps-box {
+    min-width: 320px;
+    max-width: 470px;
+    background: #fff;
+    border-radius: 1.5em;
+  }
+  .therapist-card {
+    background: $bg-light;
+    border-radius: 1em;
+    border: 2px solid transparent;
+    color: $mw-primary;
+    font-weight: 600;
+    transition: border .16s, background .14s;
+    &:hover, &.selected {
+      border: 2px solid $mw-accent;
+      background: lighten($bg-light, 2%);
+    }
+  }
+  .btn-accent {
+    background: $mw-accent;
+    color: #23232e;
+    border: none;
+    border-radius: 2em;
+    font-weight: 600;
+    &:hover { background: darken($mw-accent, 10%); }
+  }
+}
+@media (max-width: 900px) {
+  .appointment-steps-container {
+    flex-direction: column;
+    .client-cta-text {
+      // text-align: center;
+      .actions {
+        // button, a {
+        // }
+        justify-content: flex-start;
+        width: 100%;
+      }
+    }
+    .steps-box { max-width: 100vw; }
+    .client-cta-img {
+      flex: inherit;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      img {
+        align-self: center;
+        justify-self: center;
+      }
+    }
+  }
+}
+
+
+.appointments-list {
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  max-width: fit-content;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  min-width: 500px;
+  .appt-contain {
+    flex-direction: row;
+    justify-content: start;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+
+    .appt-card.card {
+      min-width: 250px;
+      border-top: 5px solid $mw-primary;
+      border-radius: 1.25rem;
+      transition: box-shadow 0.2s;
+      // background: $bg-light;
+      &:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+      .card-body {
+        padding: 1rem 1.25rem;
+        button {
+          padding: 0;
+          i {
+            font-size: 1.1rem;
+          }
+          .bi-check-circle {
+            color: $mw-primary;
+            padding: .45rem;
+            border-radius: .3rem;
+          }
+          .bi-pencil-square {
+            // background-color: $mw-primary;
+            color: $mw-primary;
+            padding: .45rem;
+            border-radius: .3rem;
+          }
+          .bi-x-circle {
+            // background-color: red;
+            color: red;
+            padding: .45rem;
+            border-radius: .3rem;
+          }
+        }
+      }
+      .badge {
+        font-size: 0.95rem;
+        border-radius: 1rem;
+        padding: 0.45em 1em;
+      }
+    }
+  }
+}
+
+/* Responsivo: quebra a tabela para scroll horizontal em telas menores */
+@media (max-width: 600px) {
+  .appointments-list {
+    padding: inherit;
+    padding-inline: 0.7rem;
+    padding-bottom: 1rem;
+    max-width: none;
+    min-width: 100px;
+    max-height: fit-content;
+    overflow-y: auto;
+    width: 100%;
+    .title {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      padding-block: 0.7rem;
+      z-index: 1000;
+    }
+    .pagination-container{
+      position: sticky;
+      bottom: 0;
+    }
+    .appt-contain {
+      max-width: 100%;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      padding-inline: 1rem;
+    }
+  }
+}
+
+.mw-container {
+  background: $bg-light;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 520px;
+  margin: 2rem auto;
+}
+
+.appointment-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  margin-bottom: 2rem;
+}
+
+.mw-btn {
+  background: $mw-primary;
+  border: none;
+  color: #fff;
+  transition: 0.2s;
+  &:hover { background: $mw-accent; color: #23232e; }
+}
+
+.appointments-list {
+  .appt-item {
+    background: #fff;
+    padding: 1rem;
+    margin-bottom: .75rem;
+    border-radius: .75rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    display: flex;
+    align-items: center;
+  }
+  h5 { color: $mw-primary; margin-bottom: 1rem; }
+}
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(35,35,46,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 280px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.11);
+}

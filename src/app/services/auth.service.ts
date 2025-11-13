@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { User } from '../api/interfaces/user';
+import { Router } from '@angular/router';
 
 export interface JwtPayload {
   exp: number;
@@ -17,14 +18,61 @@ export interface Response {
 })
 export class AuthService {
   private tokenKey = 'token'; //
-  private apiUrl = 'http://localhost:3333'; // URL base da API
+  private apiUrl = 'http://localhost:3333';
   private userSubject = new BehaviorSubject<User | null>(null);
-  user$ = this.userSubject.asObservable();
+  public user$ = this.userSubject.asObservable();
+  public isAuthenticated$ = this.user$.pipe(
+    map(user => !!user)
+  );
+  public user!: User;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router: Router
+  ) {
+      this.restoreUserFromToken();
+   }
 
   get token(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  get currentUser(): User | null {
+    return this.userSubject.getValue();
+  }
+
+  get currentUserId(): string | undefined {
+    return this.userSubject.getValue()?.id;
+  }
+
+  restoreUserFromToken(): void {
+    const token = this.token;
+    if (token) {
+      this.getMe().subscribe({
+        next: user => this.userSubject.next(user),
+        error: () => this.logout()
+      });
+    } else {
+      this.userSubject.next(null);
+    }
+  }
+
+  isLoggedCheck(): boolean {
+    const t = this.token;
+    if (!t) return false;
+
+    try {
+      const {exp} = jwtDecode<JwtPayload>(t);
+      const isValid = Date.now() < exp * 1000;
+
+      if (!isValid) {
+        this.clearToken();
+      }
+
+      return isValid;
+    } catch (error) {
+      this.clearToken();
+      return false;
+    }
   }
 
   isLogged(): boolean {
@@ -52,14 +100,32 @@ export class AuthService {
 
   saveToken ( token: string ): void {
     localStorage.setItem(this.tokenKey, token);
-    const payload = jwtDecode<{ id: string; name: string; avatar?: string }>(token);
-    this.userSubject.next({
-      name: payload.name
-    });
+
+    try {
+        const payload = jwtDecode<{ id: string; name: string; avatar?: string; profile_id?: number }>(token);
+        this.userSubject.next({
+          id: payload.id,
+          name: payload.name,
+          profile_id: payload.profile_id
+        });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getMe(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`);
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.userSubject.next(null);
+    this.router.navigate(['/']);
+  }
+
+  private clearToken(): void {
+    localStorage.removeItem('token');
   }
 
   isTherapist(): Observable<any> {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../../api/interfaces/user';
 
 interface NavItem {
@@ -17,9 +17,20 @@ interface NavItem {
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
-  user$!: Observable<User | null>;
+  user$!: boolean;
+  profileId?: number;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {
+    this.user$ = authService.isLoggedCheck();
+    this.authService.user$.subscribe({
+      next: (res) => {
+        this.profileId = res?.profile_id;
+      },
+      error: (error) => {
+        console.error('Error loading user:', error);
+      }
+    });
+  }
 
   // menuItems: NavItem[] = [
   //   { label: 'Perfil',      link: '/personal/profile',    icon: 'bi bi-person-circle'  },
@@ -29,7 +40,7 @@ export class NavbarComponent implements OnInit {
   //   { label: 'Notificações',link: '/personal/notification', icon: 'bi bi-bell'          },
   // ];
 
-    therapist: NavItem[] = [
+  therapist: NavItem[] = [
     { label: 'Nossos Parceiros',      link: '#',    icon: 'bi bi-person-bounding-box'  },
     { label: 'Últimas Novidades',      link: '#',    icon: 'bi bi-emoji-wink-fill'  },
     { label: 'Tutorial de Acesso',      link: '#',    icon: 'bi bi-book-half'  },
@@ -40,7 +51,7 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.user$ = this.authService.user$;
+
   }
 
   logout() {

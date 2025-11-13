@@ -43,6 +43,9 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { TeacherComponent } from './pages/teacher/teacher.component';
 import { TeacherLayoutComponent } from './layout/teacher-layout/teacher-layout.component';
+import { SocialNetworkComponent } from './pages/social-network/social-network.component';
+import { ClientAppointmentsComponent } from './pages/client-appointments/client-appointments.component';
+import { CalendarComponent } from './pages/therapist/schedule/calendar/calendar.component';
 
 registerLocaleData(localePt);
 
@@ -78,7 +81,10 @@ registerLocaleData(localePt);
     ProgressComponent,
     TeacherComponent,
     TeacherLayoutComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    SocialNetworkComponent,
+    ClientAppointmentsComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

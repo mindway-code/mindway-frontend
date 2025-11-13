@@ -1,8 +1,270 @@
-<div class="appt">
-  <!-- Hero Section -->
-  <div class="w-100 row mt-5 text-center">
-    <div class="hero">
-      <h1 class="">Agende Aqui!</h1>
-      <p class="lead text-muted fw-normal ">Sua jornada para um acompanhamento especializado começa aqui. <br>
-        Acesse ferramentas e recursos que facilitam o agendamento,
+
+
+<div class="appointment-steps-container d-flex flex-wrap gap-2 justify-content-between">
+  <!-- Esquerda: CTA (já criado) -->
+  <div class="w-100 w-md-45">
+      <div class="client-cta-container d-flex align-items-center ">
+        <div class="client-cta-text flex-grow-1">
+          <h2 class="fw-bold mb-2">Cuide de você. <br>Agende seu próximo atendimento!</h2>
+          <p class="lead mb-3">
+            Escolha o terapeuta de sua confiança e garanta seu horário em poucos cliques.<br>
+            Seu bem-estar merece prioridade!
+          </p>
+          <ul class="cta-benefits list-unstyled mb-4">
+            <li><i class="bi bi-check-circle-fill text-success me-1"></i> Simples e rápido</li>
+            <li><i class="bi bi-check-circle-fill text-success me-1"></i> Escolha o melhor horário para você</li>
+            <li><i class="bi bi-check-circle-fill text-success me-1"></i> Acompanhe seus agendamentos</li>
+          </ul>
+          <div class="actions d-flex align-items-baseline flex-wrap  gap-3">
+            <button class="btn btn-accent mt-2" (click)="scrollToAgendamento()">
+              <i class="bi bi-calendar-check me-1"></i>
+              Quero agendar agora
+            </button>
+            <a (click)="goBack()" class="link-success text-decoration-none h-100 ">
+              Voltar
+            </a>
+          </div>
+        </div>
+        <div class="client-cta-img d-none d-md-block" *ngIf="!showSteps; else steps">
+          <img src="assets/img/consult6.png" alt="Agendamento bem-estar">
+          <div class="cta-img-overlay"></div>
+        </div>
+      </div>
+  </div>
+  <hr class="my-1 w-50 text-black-50 mx-4">
+  <div class="appt-list w-100 p-2">
+  <div class="w-100 p-3">
+    <button (click)="openAppointments()" class="btn btn-group gap-2 btn-outline-success" *ngIf="!openAppt" >
+      Ver Agendamentos
+      <i class="bi bi-calendar-check"></i>
+    </button>
+  </div>
+
+  <div class="appointments-list " *ngIf="openAppt">
+
+    <h5 class="title">Meus Agendamentos</h5>
+
+    <div class="w-100 mb-4">
+      <button (click)="closeAppointments()" class="btn btn-group gap-2 btn-outline-success" >
+        Ocultar
+        <i class="bi bi-arrow-90deg-up  "></i>
+      </button>
+    </div>
+
+    <div *ngIf="this.myAppointments.length === 0" class="text-muted">Nenhum agendamento.</div>
+      <div class="d-flex gap-3 mb-3 flex-wrap align-items-end">
+        <!-- <div>
+          <label for="searchName" class="form-label mb-1">Pesquisar por nome:</label>
+          <input
+            id="searchName"
+            type="text"
+            class="form-control"
+            [value]="nameFilter"
+            (input)="onNameChange($event)"
+            placeholder="Nome do paciente..."
+            style="min-width: 180px;"
+          >
+        </div> -->
+        <div>
+          <label for="searchDate" class="form-label mb-1">Pesquisar por data:</label>
+          <input
+            id="searchDate"
+            type="date"
+            class="form-control"
+            [value]="dateFilter"
+            (input)="dateChange($event)"
+            style="min-width: 155px;"
+          >
+        </div>
+      </div>
+
+    <!-- Cards em Grid responsivo -->
+    <div class="appt-contain d-flex gap-4 " *ngIf="this.myAppointments.length > 0">
+
+      <div class="appt-card card " *ngFor="let appt of this.myAppointments">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-person-circle fs-4 me-2"></i>
+              <div>
+                <strong>Terapeuta:</strong> {{ appt.provider?.name || '-' }} {{appt.provider?.surname || '-'}} <br>
+                <span class="text-muted small">{{ appt.patient?.name || '-' }} {{appt.patient?.surname || '-'}} </span>
+              </div>
+            </div>
+            <div class="small mb-1">
+              <strong>Data:</strong> {{ appt.date | date:'dd/MM/yyyy' }}<br>
+              <strong>Hora:</strong> {{ appt.time }}
+            </div>
+            <div class="mb-2">
+              <span class="badge bg-success" *ngIf="appt.status === 'CONFIRMADO'">Confirmado</span>
+              <span class="badge bg-warning text-dark" *ngIf="appt.status === 'PENDENTE'">Pendente</span>
+              <span class="badge bg-secondary" *ngIf="appt.status !== 'CONFIRMADO' && appt.status !== 'PENDENTE'">{{ appt.status }}</span>
+            </div>
+            <div>
+              <small class="my-3">Opções:</small>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-sm me-2" title="Editar" (click)="openEditModal(appt)" *ngIf="appt.status === 'PENDENTE'">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm" title="Cancelar" (click)="openDeleteModal(appt)">
+                <i class="bi bi-x-circle"></i>
+              </button>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Paginação Bootstrap-like -->
+    <nav *ngIf="appointmentsMeta && appointmentsMeta.totalPages > 1" class="pagination-container my-3">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="appointmentsMeta.currentPage === 1">
+          <button class="page-link text-dark" (click)="loadMyAppointments(appointmentsMeta.currentPage - 1)">Anterior</button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let i of [].constructor(appointmentsMeta.totalPages); let idx = index"
+          [class.active]="appointmentsMeta.currentPage === idx + 1">
+          <button class="page-link" (click)="loadMyAppointments(idx + 1)">
+            {{ idx + 1 }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="appointmentsMeta.currentPage === appointmentsMeta.totalPages">
+          <button class="page-link text-dark" (click)="loadMyAppointments(appointmentsMeta.currentPage + 1)">Próxima</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  </div>
+</div>
+
+<ng-template #steps>
+  <!-- Direita: Fluxo de agendamento -->
+  <div class="steps-box w-100 w-md-52 p-4 me-4 mt-3 shadow-sm  border rounded-4">
+
+    <!-- Passo 1 -->
+    <div *ngIf="step === 1">
+      <h4 class="mb-3">Escolha seu terapeuta</h4>
+      <div *ngIf="therapists.length === 0" class="text-muted">
+        Nenhum terapeuta associado. <br>
+        Seja associado a um primeiro
+      </div>
+      <div class="therapist-list row row-cols-1 row-cols-sm-2 g-3 mb-4">
+        <div class="col" *ngFor="let t of therapists">
+          <button class="btn therapist-card w-100 py-3"
+                  [class.selected]="selectedTherapist?.id === t.id"
+                  (click)="onSelectTherapist(t)">
+            <div class="fw-bold">{{ t.name }} {{ t.surname }}</div>
+            <div class="text-muted small">{{ t.specialty || 'Terapeuta' }}</div>
+          </button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-success"
+                [disabled]="!selectedTherapist"
+                (click)="nextStep()">Próximo</button>
+      </div>
+    </div>
+
+    <!-- Passo 2 -->
+    <div *ngIf="step === 2">
+      <h4 class="mb-3">Escolha a data e o horário</h4>
+      <form [formGroup]="appointmentForm">
+        <div class="mb-3">
+          <label for="date">Data</label>
+          <input id="date" type="date" class="form-control" formControlName="date" (change)="onDateChange()">
+        </div>
+        <div class="mb-3">
+          <label for="time">Horário disponível</label>
+          <select id="time" class="form-select" formControlName="time" [disabled]="loading || availableTimes.length === 0">
+            <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
+          </select>
+          <div *ngIf="loading" class="text-muted small mt-1">Carregando horários...</div>
+          <div *ngIf="!loading && availableTimes.length === 0 && appointmentForm.get('date')?.value" class="text-danger small mt-1">
+            Nenhum horário disponível para essa data.
+          </div>
+        </div>
+      </form>
+      <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-outline-secondary" (click)="prevStep()">Voltar</button>
+        <button class="btn btn-success"
+                [disabled]="!appointmentForm.get('date')?.valid || !appointmentForm.get('time')?.valid"
+                (click)="nextStep()">Próximo</button>
+      </div>
+    </div>
+
+    <!-- Passo 3 -->
+    <div *ngIf="step === 3">
+      <h4 class="mb-3">Confirme suas informações</h4>
+      <div class="mb-3">
+        <b>Terapeuta:</b> {{ selectedTherapist?.name }} {{ selectedTherapist?.surname }}<br>
+        <b>Data:</b> {{ appointmentForm.get('date')?.value | date:'dd/MM/yyyy' }}<br>
+        <b>Horário:</b> {{ appointmentForm.get('time')?.value }}
+      </div>
+      <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-outline-secondary" (click)="prevStep()">Voltar</button>
+        <button class="btn btn-accent" [disabled]="loading" (click)="submitAppointment()">
+          {{ loading ? 'Agendando...' : 'Confirmar agendamento' }}
+        </button>
+      </div>
+      <div class="text-danger mt-2" *ngIf="errorMsg">{{ errorMsg }}</div>
+    </div>
+
+    <!-- Passo 4: Sucesso -->
+    <div *ngIf="step === 4" class="text-center py-5">
+      <i class="bi bi-check-circle-fill text-success display-3"></i>
+      <h4 class="my-3">Agendamento realizado com sucesso!</h4>
+      <button class="btn btn-success" (click)="step = 1">Agendar outro</button>
+    </div>
+
+  </div>
+
+</ng-template>
+
+<!-- MODAL GENÉRICO -->
+<div class="modal-bg" *ngIf="showEditModal">
+  <div class="modal-card" style="max-width: 390px">
+    <h5 *ngIf="modalAction === 'edit'">Editar Agendamento</h5>
+    <h5 *ngIf="modalAction === 'confirm'">Confirmar Agendamento</h5>
+    <h5 *ngIf="modalAction === 'delete'">Cancelar Agendamento</h5>
+    <div *ngIf="selectedAppt">
+
+      <!-- Editar -->
+      <form *ngIf="modalAction === 'edit'" [formGroup]="editForm" (ngSubmit)="submitEdit()">
+      <div class="mb-2">
+        <label class="fw-semibold mb-1">Paciente</label><br>
+        <span class="badge small text-muted py-2">
+          {{ selectedAppt.patient?.name }} {{ selectedAppt.patient?.surname }}
+        </span>
+      </div>
+        <div class="mb-2">
+          <label>Data</label>
+          <input type="date" class="form-control" formControlName="date">
+        </div>
+        <div class="mb-2">
+          <label>Hora</label>
+          <input type="time" class="form-control" formControlName="time">
+        </div>
+        <button class="btn btn-success w-100" [disabled]="loadingModal">
+          {{ loadingModal ? 'Salvando...' : 'Salvar alterações' }}
+        </button>
+        <div class="text-danger mt-2" *ngIf="errorModal">{{ errorModal }}</div>
+      </form>
+
+      <!-- Deletar -->
+      <div *ngIf="modalAction === 'delete'" class="text-center">
+        <p>Tem certeza que deseja <b>CANCELAR</b> este agendamento?</p>
+        <div class="mb-3">
+          <strong>{{ selectedAppt.date | date:'dd/MM/yyyy' }} às {{ selectedAppt.time }}</strong>
+        </div>
+        <button class="btn btn-danger w-100 mb-2" [disabled]="loadingModal" (click)="submitDelete()">
+          {{ loadingModal ? 'Cancelando...' : 'Cancelar Agendamento' }}
+        </button>
+        <button class="btn btn-outline-secondary w-100" (click)="closeModal()">Fechar</button>
+        <div class="text-danger mt-2" *ngIf="errorModal">{{ errorModal }}</div>
+      </div>
+    </div>
+    <div class="modal-actions mt-3" *ngIf="modalAction === 'edit'">
+      <button class="btn btn-outline-secondary w-100" (click)="closeModal()">Fechar</button>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,105 @@
+<div class="calendar-nav d-flex align-items-center justify-content-between mb-2">
+  <button class="btn btn-outline-success btn-sm" (click)="prevMonth()">&lt;</button>
+  <h5 class="m-0 text-center">{{ monthNames[currentMonth] }} {{ currentYear }}</h5>
+  <button class="btn btn-outline-success btn-sm" (click)="nextMonth()">&gt;</button>
+</div>
+
+<div class="calendar-month-table border bg-body shadow-lg    ">
+  <div class="calendar-weekdays">
+    <span *ngFor="let w of weekdays" class="calendar-weekday">{{ w }}</span>
+  </div>
+  <div class="calendar-weeks">
+    <div class="calendar-week" *ngFor="let week of daysMatrix">
+      <span
+        class="calendar-day"
+        *ngFor="let day of week"
+        [class.not-current-month]="!day.isCurrentMonth"
+        [class.has-appointment]="hasAppointment(day.date)"
+        [title]="getAppointmentsByDay(day.date)"
+        (click)="openDayModal(day.date)"
+      >
+        {{ day.date.getDate() }}
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL DE AGENDAMENTO DO DIA -->
+<div class="modal-bg" *ngIf="showDayModal">
+  <div class="modal-card" style="max-width: 420px">
+    <h5>
+      Agendamentos de {{ selectedDay | date:'fullDate' }}
+    </h5>
+    <ul class="list-group appt-list mb-3" *ngIf="appointmentsOfDay.length > 0">
+      <li class="list-group-item" *ngFor="let a of appointmentsOfDay">
+        <b>{{ a.time }}</b>
+        <span *ngIf="a.notes">- {{ a.notes }}</span>
+        <br>
+        <small>Paciente: {{ a.patient?.name }} {{a.patient?.surname}} </small>
+        <br>
+        <small>Profissional: {{ a.provider?.name || a.provider_id }}</small>
+        <br>
+        <span class="badge bg-info text-dark">{{ a.status }}</span>
+      </li>
+    </ul>
+    <div *ngIf="appointmentsOfDay.length === 0" class="text-muted mb-3">Nenhum agendamento para este dia.</div>
+
+
+    <hr class="my-2">
+
+    <button
+      *ngIf="!showCreateForm"
+      class="btn btn-success w-100 mb-2"
+      (click)="openCreateForm()">
+      <i class="bi bi-plus-circle me-1"></i> Novo agendamento
+    </button>
+
+
+    <form [formGroup]="appointmentForm" (ngSubmit)="submitAppointment()"
+      *ngIf="showCreateForm" >
+      <h6 class="mb-3">Criar novo agendamento</h6>
+
+      <div class="mb-2">
+        <label>Hora</label>
+        <input type="time" class="form-control" formControlName="time">
+      </div>
+      <div class="mb-2 position-relative">
+        <label>Paciente</label>
+        <input
+          type="text"
+          class="form-control"
+          [value]="userSearchTerm"
+          (input)="onUserSearch($any($event.target).value)"
+          [readonly]="!!selectedUser"
+          [attr.disabled]="creating ? true : null"
+          placeholder="Digite o nome do paciente"
+          (blur)="clearUserSearchResults()"
+          autocomplete="off"
+        >
+        <input type="hidden" formControlName="patient_id">
+        <span *ngIf="selectedUser" class="badge bg-success ms-2" style="cursor:pointer" (click)="clearUserSearch()">Selecionado: {{ selectedUser.name }} <i class="bi bi-x-lg"></i></span>
+        <ul *ngIf="userSearchResults.length > 0" class="list-group position-absolute w-100" style="z-index:10; max-height:180px; overflow:auto">
+          <li
+            class="list-group-item list-group-item-action"
+            *ngFor="let u of userSearchResults"
+            (mousedown)="selectUserFromSearch(u)">
+            {{ u.name }} {{ u.surname }} <small class="text-muted">({{ u.email }})</small>
+          </li>
+        </ul>
+        <div *ngIf="userSearchLoading" class="text-muted small">Buscando...</div>
+      </div>
+      <div class="mb-2">
+        <label>Observações:</label>
+        <input type="text" class="form-control" formControlName="note">
+      </div>
+      <button type="submit" class="btn btn-success w-100" [disabled]="creating">
+        {{ creating ? 'Salvando...' : 'Criar agendamento' }}
+      </button>
+      <div class="text-danger mt-2" *ngIf="createError">{{ createError }}</div>
+    </form>
+    <div class="modal-actions mt-3">
+      <button class="btn btn-outline-secondary w-100" (click)="closeDayModal()">Fechar</button>
+    </div>
+  </div>
+</div>

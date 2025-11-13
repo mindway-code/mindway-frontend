@@ -32,11 +32,28 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'appointments', component: ClientAppointmentsComponent },
       // outras rotas que devem usar o CommonLayoutComponent
     ],
   },
-  { path: 'social-network', component: SocialNetworkComponent },
+
+  {
+    path: '',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    component: CommonLayoutComponent,
+    children: [
+      {
+        path: 'appointments',
+        component: ClientAppointmentsComponent
+      }
+    ]
+  },
+  {
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    path: 'social-network',
+    component: SocialNetworkComponent
+  },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

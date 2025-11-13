@@ -1,117 +1,140 @@
-<div class="card container-fluid">
-  <div class="card-header bg-light card-header-tabs mb-4   d-flex flex-column align-items-center justify-content-center">
-    <h3>Dados de Perfil <i class="bi bi-pencil-square"></i></h3>
-    <hr class="w-75">
+<div class="edit-profile-container border">
+
+  <div class="p-2">
+    <a class="text-decoration-none back" (click)="goBack()"><i class="bi bi-back fs-5">Voltar</i></a>
   </div>
-  <div class="card-img-overlay ">
-    <a href="/personal/profile" class="text-decoration-none fs-5">
-      <i class="bi bi-back ">Voltar</i>
-    </a>
-  </div>
-  <div class="card-container d-flex gap-3 justify-content-center align-items-start">
-    <div class=" card card-body rounded">
-      <div class="card-header ">
-        <h5>Cadastre seus filhos aqui!</h5>
+
+  <!-- CTA -->
+  <section class="profile-cta d-flex align-items-start justify-content-between mb-0">
+    <div>
+      <h2 class="fw-bold mb-2">Seu perfil, sua identidade.</h2>
+      <p class="lead text-muted mb-0">
+        Mantenha suas informações sempre atualizadas para uma experiência personalizada na plataforma MindWay!
+      </p>
+    </div>
+    <img class="cta-img d-none d-md-block" src="assets/img/consult6.png" alt="Perfil" />
+  </section>
+
+  <!-- Dados do usuário -->
+  <div class="profile-card  p-4 bg-white border">
+    <h4 class="mb-4">Informações pessoais</h4>
+
+    <ng-container *ngIf="!loading && !editing">
+      <div class="row g-3 mb-2">
+        <div class="col-md-6">
+          <label>Nome</label>
+          <div class="profile-info">{{ user.name }}</div>
+        </div>
+        <div class="col-md-6">
+          <label>Sobrenome</label>
+          <div class="profile-info">{{ user.surname }}</div>
+        </div>
+        <div class="col-md-6">
+          <label>E-mail</label>
+          <div class="profile-info">{{ user.email }}</div>
+        </div>
+        <div class="col-md-6">
+          <label>Celular</label>
+          <div class="profile-info">{{ user.contact?.smartphone }}</div>
+        </div>
+        <div class="col-md-6">
+          <label>Telefone</label>
+          <div class="profile-info">{{ user.contact?.telephone }}</div>
+        </div>
+        <div class="col-md-6">
+          <label>País</label>
+          <div class="profile-info">
+            {{ user.address?.country }}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Endereço</label>
+          <div class="profile-info">
+            {{ user.address?.address_name }} {{ user.address?.address_number }}<br>
+            {{ user.address?.city }} - {{ user.address?.state }} | CEP: {{ user.address?.cep }}
+          </div>
+        </div>
       </div>
-      <div class="card-img-overlay">
-        <i class="bi bi-person-arms-up"></i>
+      <button class="btn btn-accent mt-3" (click)="startEdit()">
+        <i class="bi bi-pencil-square "></i> Editar informações
+      </button>
+      <button class="btn btn-accent mt-3 btn-mobile" (click)="startEdit()">
+        <i class="bi bi-pencil-square "></i> Editar
+      </button>
+    </ng-container>
+
+    <!-- Form de edição -->
+    <form *ngIf="editing" [formGroup]="profileForm" (ngSubmit)="save()">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label>Nome</label>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+        <div class="col-md-6">
+          <label>Sobrenome</label>
+          <input type="text" class="form-control" formControlName="surname">
+        </div>
+        <div class="col-md-6">
+          <label>E-mail</label>
+          <input type="email" class="form-control" formControlName="email" >
+        </div>
+        <div class="col-md-6" formGroupName="contact">
+          <label>Celular</label>
+          <input type="text" class="form-control" formControlName="smartphone">
+        </div>
+        <div class="col-md-6" formGroupName="contact">
+          <label>Telefone</label>
+          <input type="text" class="form-control" formControlName="telephone">
+        </div>
+        <div class="col-md-6" formGroupName="address">
+          <label>País</label>
+          <input
+            type="text"
+            class="form-control mb-2"
+            placeholder="Pesquisar país..."
+            [(ngModel)]="countrySearchTerm"
+            [ngModelOptions]="{standalone: true}"
+            autocomplete="off"
+          >
+          <select class="form-select" formControlName="country">
+            <option value="">Selecione o país</option>
+            <option *ngFor="let pais of filteredCountries" [value]="pais">
+              {{ pais }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6" formGroupName="address">
+          <label>Endereço</label>
+          <input type="text" class="form-control" formControlName="address_name" placeholder="Rua, Av...">
+        </div>
+        <div class="col-md-3" formGroupName="address">
+          <label>Número</label>
+          <input type="text" class="form-control" formControlName="address_number">
+        </div>
+        <div class="col-md-3" formGroupName="address">
+          <label>CEP</label>
+          <input type="text" class="form-control" formControlName="cep">
+        </div>
+        <div class="col-md-4" formGroupName="address">
+          <label>Estado</label>
+          <input type="text" class="form-control" formControlName="state">
+        </div>
+        <div class="col-md-4" formGroupName="address">
+          <label>Cidade</label>
+          <input type="text" class="form-control" formControlName="city">
+        </div>
       </div>
-      <div class="card-text m-2">
-        <h6>Informações para o cadastro:</h6>
-        <ul>
-          <li>Nome completo</li>
-          <li>N° do registro (se houver)</li>
-          <li>Idade</li>
-          <li>N° da família criada</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-group btn-outline-success  align-items-center justify-content-center ">
-          Clique Aqui
+      <div class="d-flex gap-2 mt-4">
+        <button class="btn btn-success w-100" type="submit">
+          Salvar
+        </button>
+        <button type="button" class="btn btn-outline-secondary w-100" (click)="cancelEdit()">
+          Cancelar
         </button>
       </div>
-    </div>
-    <div class="card card-body w-auto rounded">
-      <div class="card-header ">
-        <h5>Registre sua família aqui!</h5>
-      </div>
-      <div class="card-img-overlay ">
-        <i class="bi bi-person-raised-hand fs-5   "></i>
-      </div>
-      <div class="card-text m-2">
-        <h6>Observações para o cadastro:</h6>
-        <ul>
-          <li>Nome da Família.</li>
-          <li>Cadastre pelo menos um membro (Pai, mãe ou pessoa responsável).</li>
-          <li>Anote o número da Família quando concluir.</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-group btn-outline-success  align-items-center justify-content-center ">
-          Clique Aqui
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class=" mt-5 align-items-center justify-content-center flex-column">
-    <h3 class="card-title card-header">Informações Pessoais</h3>
-    <div class="d-flex flex-wrap align-items-center justify-content-evenly">
-      <div class="d-flex flex-column p-4 w-100 mb-0">
-        <h6 class="card-title card-header bg-light">Informações Básicas</h6>
-        <form action="submit" class="d-flex flex-wrap w-100 gap-4 mb-5">
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="name">Nome:</label>
-            <input type="text" name="name" id="name" class="input-group-text ">
-          </div>
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="surname">Sobrenome:</label>
-            <input type="text" name="surname" id="surname" class="input-group-text ">
-          </div>
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email" class="input-group-text ">
-          </div>
-          <div>
-            <button class="w-auto btn btn-group btn-outline-success">Salvar <i class="bi bi-save  ms-2"></i></button>
-          </div>
-        </form>
-        <h6 class="card-title card-header bg-light">Informações de Contato</h6>
-        <form action="submit" class="d-flex flex-wrap w-100 gap-4 mb-5">
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="telephone">Telefone:</label>
-            <input type="text" name="telephone" id="telephone" class="input-group-text ">
-          </div>
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="smartphone">Celular:</label>
-            <input type="text" name="smartphone" id="smartphone" class="input-group-text ">
-          </div>
-          <div>
-            <button class="w-auto btn btn-group btn-outline-success">Salvar <i class="bi bi-save  ms-2"></i></button>
-          </div>
-        </form>
-        <h6 class="card-title card-header bg-light">Informações de Endereço</h6>
-        <form action="submit" class="d-flex flex-wrap w-100 gap-4 mb-5">
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="address">Endereço:</label>
-            <input type="text" name="address" id="address" class="input-group-text ">
-          </div>
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="country">País:</label>
-            <input type="text" name="country" id="country" class="input-group-text ">
-          </div>
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="state">Estado:</label>
-            <input type="text" name="state" id="state" class="input-group-text ">
-          </div>
-          <div class="d-flex gap-1 align-items-start flex-column ">
-            <label for="city">Cidade:</label>
-            <input type="text" name="city" id="city" class="input-group-text ">
-          </div>
-          <div>
-            <button class="w-auto btn btn-group btn-outline-success">Salvar <i class="bi bi-save  ms-2"></i></button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <div class="text-success mt-2" *ngIf="successMsg">{{ successMsg }}</div>
+      <div class="text-danger mt-2" *ngIf="errorMsg">{{ errorMsg }}</div>
+    </form>
+    <div *ngIf="loading" class="text-muted mt-2">Carregando...</div>
   </div>
 </div>

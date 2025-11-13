@@ -1,48 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-/* ----------  MindWay Theme Overrides  ---------- */
-$theme-colors: (
-  "primary":  #006c70,   // verde-escuro
-  "warning":  #f4b313,   // amarelo-médio
-  "success":  #30b48a,
-  "info":     #5bc0de,
-  "danger":   #e74c3c,
-  "secondary":#6c757d,
-  "light":    #f8f9fa,
-  "dark":     #212529
-);
-
-/* Cores MindWay */
-$primary:  #006c70;
-$accent:   #f4b313;
-$bg-light: #f4f7f6;
-$text-muted: #6c757d;
-
-/* bordas e radius opcionais */
-$border-radius:        1rem;
-$border-radius-lg:     1.25rem;
 
 /* tipografia opcional */
 $font-family-sans-serif: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-.btn-accent {
-  background: $accent;
-  border: none;
-  border-radius: 20px;
-  color: $primary;
-  padding: 0.5rem 1rem;
-  transition: filter 0.2s;
-  &:hover {
-    filter: brightness(0.9);
-  }
-}
-
 /* ----------  Carregue todo o Bootstrap  ---------- */
 @import "bootstrap/scss/bootstrap";
-
-/* ----------  Extras ou utilitários próprios  ---------- */
-/* botão primário um pouco mais forte no hover */
-.btn-primary:hover, .btn-warning:hover {
-  filter: brightness(0.9);
-}
 
 
 
@@ -50,10 +10,62 @@ $font-family-sans-serif: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 /* You can add global styles to this file, and also import other style files */
 :root {
   margin: 0;
+  /* ----------  MindWay Theme Overrides  ---------- */
+  $theme-colors: (
+    "primary":  #006c70,   // verde-escuro
+    "warning":  #f4b313,   // amarelo-médio
+    "success":  #30b48a,
+    "info":     #5bc0de,
+    "danger":   #e74c3c,
+    "secondary":#6c757d,
+    "light":    #f8f9fa,
+    "dark":     #212529
+  );
+
+  /* Cores MindWay */
+  $primary:  #006c70;
+  $accent:   #f4b313;
+  $bg-light: #f4f7f6;
+  $text-muted: #6c757d;
 }
 
 body {
   margin: 0;
   background-color: #f4f7f6;
+  h1, h2, h3, h4, h5, h6, p, a, label, ::placeholder {
+    font-family: "Montserrat";
+  }
+  p {
+    font-size: .9rem;
+  }
+  button, input {
+    outline: none;
+  }
+  ::placeholder {
+    font-size: 1rem;
+  }
   // margin-top: 2rem;
+  @media (max-width: 700px) {
+    h1 {
+      font-size: 1.4rem !important;
+    }
+    h2 {
+      font-size: 1.2rem !important;
+    }
+    h3 {
+      font-size: 1.1rem !important;
+    }
+    h4 {
+      font-size: 1.05rem !important;
+    }
+    h5 {
+      font-size: 1rem !important;
+    }
+    a, p, .card-text, button, label, input {
+      font-size: 0.9rem !important;
+    }
+    ::placeholder {
+      font-size: 0.8rem !important;
+    }
+  }
 }

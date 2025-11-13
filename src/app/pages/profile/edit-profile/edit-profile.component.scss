@@ -1,80 +1,72 @@
-$primary:  #006c70;
-$accent:   #f4b313;
-$bg-light: #f4f7f6;
-$text-muted: #6c757d;
+$mw-primary:  #006c70;
+$mw-accent:   #f4b313;
+$bg-light:    #f4f7f6;
+$text-muted:  #6c757d;
+$border: #4345444b;
 
-form {
-  // border: 1px solid black;
-  padding: 0.5rem;
-
-  @media (max-width: 776px) {
-
-    .card-header {
-      width: 100%;
-    }
-    padding: 0rem;
-    margin: 0;
-    width: 100%;
-  }
-
-  button {
-    border: none;
-  }
-  z-index: 10;
+h1, h2, h3, h4, h5, h6 {
+  color: $mw-primary;
 }
 
+.edit-profile-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: .7rem .5rem;
 
-
-  .container-fluid {
-    min-height: 105vh;
-    background-color: $bg-light;
-
-  @media (max-width: 776px) {
-    padding: 0rem;
-    margin: 0rem;
+  .back {
+    color: $mw-primary;
+    cursor: pointer;
   }
 
-    h3, h5, h6 {
-      color: $primary;
+  .profile-cta {
+    background: $bg-light;
+    border-radius: 50%;
+    padding: 2rem 2.5rem;
+    min-height: 180px;
+    margin-bottom: 2.4rem;
+    .cta-img {
+      max-width: 180px;
+      opacity: 0.28;
+      border-radius: 1.3em;
     }
-    button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0.5rem 0.5rem;
-      width: auto;
-      font-weight: 500;
-    }
-    .card-text {
-      min-height: 20vh;
-    }
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    h2 { color: $mw-primary; }
   }
-
-.card-container {
-  width: 100%;
-  // border: 1px solid black;
-  flex-wrap: wrap;
-
-  .card {
-    border-left: 5px solid $accent;
-    max-width: 40%;
-    min-width: 16rem;
-    transition: ease 0.5s;
-    &:hover {
-      transform: translateY(00.5rem);
-      box-shadow: 1px 2px 0px 0px rgba( 0, 0, 0, 0.15);
+  .profile-card {
+    background: #fff;
+    .profile-info {
+      font-size: 1.13em;
+      color: $mw-primary;
+      font-weight: 600;
+      padding: .35em 0 .12em 0;
+    }
+    label { color: $text-muted; font-size: 0.93em; }
+    .btn-accent {
+      background: $mw-accent;
+      color: #23232e;
+      font-weight: 600;
+      border: none;
+      padding: 0.5em 2em;
+      margin-top: 1.2em;
+      &:hover { background: darken($mw-accent, 8%); }
+    }
+    .btn-mobile {
+      display: none;
     }
   }
 }
 
-input {
-  border: 0.5px solid #ccc;
-  outline: none;
-  min-width: 15rem;
+@media (max-width: 900px) {
+  .edit-profile-container {
+    padding: 0 .7em;
+    .profile-cta { padding: 1em 1em; }
+    .cta-img { display: none; }
+    .profile-card {
+      .btn-accent {
+        display: none;
+      }
+      .btn-mobile {
+        display: flex;
+      }
+    }
+  }
 }

@@ -11,7 +11,7 @@ $txt-muted:   #e0e0e0;
   overflow: hidden;
   flex-direction: column;
 
-  .sidebar {
+  .nav {
     width: 100%;
     background: $mw-primary;
     color: $txt-light;
@@ -79,6 +79,7 @@ $txt-muted:   #e0e0e0;
   .link {
     transition: background 0.2s, border-color 0.2s;
     padding: 0.5rem;
+    cursor: pointer;
     &:hover {
       background: rgba(255,255,255,0.1);
     }
@@ -109,7 +110,7 @@ $txt-muted:   #e0e0e0;
 @media (max-width: 768px) {
   .therapist-layout {
     flex-direction: column;
-    .sidebar {
+    .nav {
       width: 100%;
       flex-direction: row;
       align-items: center;
@@ -119,10 +120,20 @@ $txt-muted:   #e0e0e0;
         display: flex;
         li {
           a {
-            padding: 0.5rem;
+            padding: .5rem;
             flex-direction: column;
-            i { margin: 0; }
-            .label { font-size: 0.75rem; }
+            justify-content: center;
+            align-items: center;
+            i { margin: inherit; font-size: 1.4rem; color: $bg-light;}
+            .label { display: none;  }
+            border-left: inherit;
+            &.active {
+              background-color: rgba(203, 197, 197, 0.1);
+              color: $mw-primary;
+              border-bottom-color: $mw-accent;
+              font-weight: 600;
+              border-bottom: 3px solid $mw-accent;
+            }
           }
         }
       }

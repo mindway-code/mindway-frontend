@@ -9,9 +9,14 @@
         Com a nossa plataforma, todos têm acesso fácil ao
         histórico, evolução e acompanhamento.
       </p>
-      <a href="/personal/profile" class="btn btn-warning btn-lg shadow-lg">
+      <a href="/personal/profile" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId !== 3; else therapist">
         <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
       </a>
+      <ng-template #therapist>
+      <a href="/therapist/profile" class="btn btn-warning btn-lg shadow-lg" >
+        <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
+      </a>
+      </ng-template>
     </div>
   </div>
 
@@ -19,12 +24,19 @@
   <div class="features d-flex gap-4 flex-wrap mt-5 justify-content-center text-center">
     <!-- Histórico de Atendimentos -->
     <div class="features-card mb-4">
-      <div class="card border-0  rounded-lg align-items-center">
+      <div class="card border-0  rounded-lg align-items-center justify-content-center">
         <img src="assets/img/calendarM2.PNG" class="img-top" alt="Terapeuta" >
         <div class="card-body">
           <h5 class="card-title ">Agendamento de Atendimentos</h5>
-          <p class="card-text">Agende atendimentos de forma rápida e fácil, garantindo o melhor acompanhamento para você e sua família.</p>
-          <a href="/appointments" class="btn btn-primary shadow-lg">Agende Aqui</a>
+          <p class="card-text">Agende o melhor acompanhamento para você e sua família.</p>
+          <a href="/appointments" class="btn btn-primary shadow-lg" *ngIf="profileId !== 3; else appt">
+            Agende Aqui
+          </a>
+          <ng-template #appt>
+          <a href="/therapist/schedule" class="btn btn-primary shadow-lg" >
+            Agende Aqui
+          </a>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -35,7 +47,7 @@
         <img src="assets/img/rede2.png" class="img-top" alt="Tarefas" >
         <div class="card-body">
           <h5 class="card-title ">Rede de Apoio</h5>
-          <p class="card-text">Conecte-se a sua rede de apoio! O MindWay está aqui para ajudar.</p>
+          <p class="card-text">Conecte-se a sua rede de apoio! <br> O MindWay está aqui para ajudar.</p>
           <a href="/social-network" class="btn btn-primary shadow-lg">Entrar na Rede</a>
         </div>
       </div>
@@ -72,7 +84,7 @@
       <h2 class="">Acompanhamento Personalizado !</h2>
       <p class="lead text-muted fw-normal ">No MindWay, cada detalhe importa. <br>
         Trabalhe lado a lado com profissionais especializados  e acompanhe a evolução com facilidade e apoio contínuo.</p>
-      <a href="/login" class="btn btn-warning btn-lg shadow-lg">
+      <a href="/register" class="btn btn-warning btn-lg shadow-lg">
         <i class="bi bi-box-arrow-in-right"></i> Começar Agora
       </a>
     </div>

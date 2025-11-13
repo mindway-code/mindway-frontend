@@ -22,7 +22,7 @@ export class LoginComponent {
 
       this.authService.login(this.email, this.password).subscribe(
         (response) => {
-          this.authService.saveToken(response.token); // Salva o token no localStorage
+          this.authService.saveToken(response.token);
           this.errorMessage = '';
           this.router.navigate(['/']);
         },

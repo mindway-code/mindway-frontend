@@ -13,3 +13,168 @@ h1, h2, h3, h4, h5, h6 {
   background-color: $bg-light;
   min-height: 40vh;
 }
+
+.therapist-info-page {
+  width: 100%;
+  // max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 1. CTA */
+.info-cta {
+  background: $bg-light;
+  // border-radius: 2rem;
+  // box-shadow: 0 2px 12px $border;
+  overflow: hidden;
+  min-height: 210px;
+  position: relative;
+  .cta-text {
+    z-index: 2;
+    flex: 1 1 350px;
+    h2 { color: $mw-primary; }
+    .btn-accent {
+      background: $mw-accent;
+      color: #23232e;
+      font-weight: 600;
+      border: none;
+      border-radius: 2em;
+      padding: 0.75em 2em;
+      // box-shadow: 0 1px 6px rgba(0,0,0,.05);
+      transition: background .14s;
+      &:hover { background: darken($mw-accent, 8%); }
+    }
+  }
+  .cta-img {
+    position: relative;
+    flex: 1 1 240px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    img {
+      max-width: 220px;
+      border-radius: 1.5em;
+      opacity: 0.22;
+      z-index: 1;
+    }
+    .img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #fff0, #f4b31326);
+      z-index: 2;
+      pointer-events: none;
+    }
+  }
+}
+
+/* 2. Modal */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1090;
+  background: rgba(35, 69, 68, 0.26);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-card {
+  background: #fff;
+  border-radius: 1.3rem;
+  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 320px;
+  max-width: 520px;
+  width: 100%;
+  position: relative;
+
+  select {
+    line-height: 1.3;
+  }
+}
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #23232e;
+  opacity: 0.7;
+  &:hover { opacity: 1; color: $mw-primary; }
+}
+
+/* 3. Mural de Certificados */
+.certificados-mural {
+  background: $group;
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 8px $border;
+  margin-bottom: 2rem;
+  .upload-label {
+    cursor: pointer;
+    font-weight: 500;
+    i { font-size: 1.2em; }
+  }
+  .certificados-gallery {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    .cert-card {
+      background: $bg-light;
+      border-radius: 1.1em;
+      box-shadow: 0 1px 8px $border;
+      width: 170px;
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img, embed {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 1.1em 1.1em 0 0;
+        background: #ececec;
+      }
+      .cert-footer {
+        width: 100%;
+        background: #fff;
+        color: $mw-primary;
+        text-align: center;
+        padding: 0.4em 0.7em;
+        font-size: 1em;
+        border-top: 1px solid $border;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .therapist-info-page {
+    max-width: 98vw;
+    .info-cta {
+      flex-direction: column;
+        padding: inherit;
+      .cta-text{
+        flex: inherit;
+        width: 100%;
+        min-width: 300px;
+        margin-bottom: 0;
+        padding: inherit;
+        .btn-accent {
+          padding: .4rem .4rem;
+          border-radius: .3rem;
+        }
+      }
+      .cta-img {
+        justify-content: center;
+        width: 90%;
+        min-width: 300px;
+      }
+    }
+    .certificados-mural .certificados-gallery {
+      justify-content: center;
+    }
+  }
+}
