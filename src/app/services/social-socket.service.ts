@@ -2,15 +2,17 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable, fromEvent } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
   private socket: Socket;
+  private apiUrl = `${environment.apiBaseUrl}social-networks`;
 
   constructor() {
-    this.socket = io('http://localhost:3333');
+    this.socket = io(this.apiUrl);
   }
 
   joinSocialNetwork(socialNetworkId: number, userId?: string, limit?: number, offset?: number) {
