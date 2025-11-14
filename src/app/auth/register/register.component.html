@@ -11,22 +11,22 @@
   <div class="register-form-wrapper d-flex align-items-center justify-content-center">
     <div class="register-card p-4">
       <h3 class="text-center mb-4">Criar Conta</h3>
-      <form  #registerForm="ngForm" autocomplete="off">
+      <form  #registerForm="ngForm" autocomplete="off" (ngSubmit)="onRegister(registerForm)">
         <!-- Nome Completo -->
         <div class="form-floating mb-3">
           <input
             type="text"
-            id="fullName"
+            id="name"
             class="form-control"
             placeholder=" "
-            [(ngModel)]="fullName"
-            name="fullName"
+            [(ngModel)]="name"
+            name="name"
             required
             #nameInput="ngModel"
           />
-          <label for="fullName">
+          <label for="name">
             <i class="bi bi-person-fill me-2"></i>
-            Nome Completo
+            Nome
           </label>
           <div *ngIf="nameInput.invalid && nameInput.touched" class="error m-1">
             Nome é obrigatório
@@ -125,10 +125,11 @@
           Cadastrar
         </button>
 
+
         <!-- Link para Login -->
         <div class="links text-center">
-          <span>Já tem conta?</span>
-          <a routerLink="/login">Entrar</a>
+          <span class="small text-muted fs-6 mx-1 ">Já tem conta?</span>
+          <a routerLink="/login" class="fs-6">Entrar</a>
         </div>
       </form>
     </div>

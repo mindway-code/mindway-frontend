@@ -95,8 +95,8 @@ export class AuthService {
     return this.http.post<Response>(`${this.apiUrl}login`, { email, password });
   }
 
-  register ( name: string,  surname: string, email: string, password: string ): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}register`, { email, password, name, surname });
+  register ( name: string,  surname: string, email: string, password: string, confirmPassword: string ): Observable<Response> {
+    return this.http.post<Response>(`${this.apiUrl}register`, { email, password, name, surname, confirmPassword });
   }
 
   saveToken ( token: string ): void {

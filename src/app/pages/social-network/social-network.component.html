@@ -34,12 +34,12 @@
         </button>
       </div>
     </div>
-    <div class="social d-flex flex-column w-100 align-items-center gap-3">
+    <div class="social d-flex flex-column w-100 align-items-center justify-content-center gap-3">
         <ul class="social-list list-group mt-4 ">
           <li class="list-group-item " *ngFor="let net of networks">
             <div class="d-flex flex-column social-container">
               <p class="">{{ net.name }}</p>
-              <div class="d-flex gap-3 social-options">
+              <div class="d-flex gap-3 social-options justify-content-center">
                 <button class="btn open" (click)="openChatModal(net)">
                   Chat
                   <i class="bi bi-chat-fill "></i>
@@ -222,7 +222,7 @@
   <div class="modal-card" style="max-width: 540px;">
     <h4>Membros da Rede "{{ selectedNetwork?.name }}"</h4>
 
-    <div class="mb-3" *ngIf="members?.length === 0 else member">
+    <div class="mb-3" *ngIf="members.length === 0 else member">
       <span class="text-muted">Nenhum membro encontrado nesta rede.</span>
     </div>
 

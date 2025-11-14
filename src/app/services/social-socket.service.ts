@@ -9,10 +9,14 @@ import { environment } from '../../environments/environment';
 })
 export class SocketService {
   private socket: Socket;
-  private apiUrl = `${environment.apiBaseUrl}social-networks`;
+  private apiUrl = `${environment.apiBaseUrl}`;
 
   constructor() {
-    this.socket = io(this.apiUrl);
+    this.socket = io(this.apiUrl, {
+      path: '/socket.io',
+      transports: ['websocket'],
+      withCredentials: true
+    });
   }
 
   joinSocialNetwork(socialNetworkId: number, userId?: string, limit?: number, offset?: number) {

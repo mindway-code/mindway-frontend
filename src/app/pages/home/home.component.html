@@ -9,11 +9,14 @@
         Com a nossa plataforma, todos têm acesso fácil ao
         histórico, evolução e acompanhamento.
       </p>
-      <a href="/personal/profile" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId !== 3; else therapist">
+      <a href="/personal/profile" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId === 1;">
+        <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
+      </a>
+      <a href="/login" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId === null;">
         <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
       </a>
       <ng-template #therapist>
-      <a href="/therapist/profile" class="btn btn-warning btn-lg shadow-lg" >
+      <a href="/therapist/profile" class="btn btn-warning btn-lg shadow-lg" *ngIf="profileId === 2 || profileId === 3;">
         <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
       </a>
       </ng-template>
@@ -29,7 +32,7 @@
         <div class="card-body">
           <h5 class="card-title ">Agendamento de Atendimentos</h5>
           <p class="card-text">Agende o melhor acompanhamento para você e sua família.</p>
-          <a href="/appointments" class="btn btn-primary shadow-lg" *ngIf="profileId !== 3; else appt">
+          <a href="/appointments" class="btn btn-primary shadow-lg" *ngIf="profileId === 1; else appt">
             Agende Aqui
           </a>
           <ng-template #appt>

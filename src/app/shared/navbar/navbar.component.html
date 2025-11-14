@@ -48,7 +48,7 @@
           >
             <img src="assets/img/perfil_1-removebg-preview.png" alt="Avatar" class="avatar">
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" *ngIf="profileId !== 3; else therapist">
+          <ul class="dropdown-menu dropdown-menu-end" *ngIf="profileId === 1">
             <li><a class="dropdown-item" routerLink="/personal/profile">Perfil</a></li>
             <li><a class="dropdown-item" routerLink="/personal/history">Histórico</a></li>
             <li><a class="dropdown-item" routerLink="/personal/task">Tarefas</a></li>
@@ -56,7 +56,7 @@
             <li><a class="dropdown-item text-danger"  (click)="logout()">Sair</a></li>
           </ul>
           <ng-template #therapist>
-            <ul class="dropdown-menu dropdown-menu-end" >
+            <ul class="dropdown-menu dropdown-menu-end" *ngIf="profileId === 2 || profileId === 3">
               <li><a class="dropdown-item" routerLink="/therapist">Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-danger"  (click)="logout()">Sair</a></li>
