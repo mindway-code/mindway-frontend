@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { User } from '../api/interfaces/user';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface JwtPayload {
   exp: number;
@@ -17,8 +18,8 @@ export interface Response {
   providedIn: 'root'
 })
 export class AuthService {
-  private tokenKey = 'token'; //
-  private apiUrl = 'http://localhost:3333';
+  private tokenKey = 'token';
+  private apiUrl = `${environment.apiBaseUrl}`;
   private userSubject = new BehaviorSubject<User | null>(null);
   public user$ = this.userSubject.asObservable();
   public isAuthenticated$ = this.user$.pipe(
@@ -91,11 +92,11 @@ export class AuthService {
   }
 
   login ( email: string, password: string ): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}/login`, { email, password });
+    return this.http.post<Response>(`${this.apiUrl}login`, { email, password });
   }
 
   register ( name: string,  surname: string, email: string, password: string ): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}/register`, { email, password, name, surname });
+    return this.http.post<Response>(`${this.apiUrl}register`, { email, password, name, surname });
   }
 
   saveToken ( token: string ): void {
@@ -115,7 +116,7 @@ export class AuthService {
   }
 
   getMe(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`);
+    return this.http.get<User>(`${this.apiUrl}me`);
   }
 
   logout(): void {
@@ -129,6 +130,6 @@ export class AuthService {
   }
 
   isTherapist(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/auth/therapist`);
+    return this.http.get(`${this.apiUrl}auth/therapist`);
   }
 }

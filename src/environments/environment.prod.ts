@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://mindway-backend-production.up.railway.app'
+  apiBaseUrl: 'https://mindway-backend-production.up.railway.app/supabase/'
 };
