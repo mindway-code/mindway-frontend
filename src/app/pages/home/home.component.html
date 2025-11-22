@@ -9,14 +9,16 @@
         Com a nossa plataforma, todos têm acesso fácil ao
         histórico, evolução e acompanhamento.
       </p>
-      <a href="/personal/profile" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId === 1;">
-        <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
-      </a>
-      <a href="/login" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId === null;">
+      <a href="/personal/profile" class="btn btn-warning btn-lg shadow-lg"  *ngIf="profileId === 1; else therapist">
         <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
       </a>
       <ng-template #therapist>
-      <a href="/therapist/profile" class="btn btn-warning btn-lg shadow-lg" *ngIf="profileId === 2 || profileId === 3;">
+        <a href="/therapist/profile" class="btn btn-warning btn-lg shadow-lg" *ngIf="profileId === 2 || profileId === 3; else login">
+          <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
+        </a>
+      </ng-template>
+      <ng-template #login>
+      <a href="/login" class="btn btn-warning btn-lg shadow-lg">
         <i class="bi bi-box-arrow-in-right"></i> Acessar meu perfil
       </a>
       </ng-template>

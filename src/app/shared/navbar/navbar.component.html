@@ -21,7 +21,7 @@
     <div class="actions">
       <!-- Ações de Login/Logout -->
     <ng-container *ngIf="!user$; else loggedTpl">
-      <div class="nav-auth-buttons">
+      <div class="nav-auth-buttons" *ngIf="!user$; else loggedTpl">
         <a class="btn btn-login"   routerLink="/login">Entrar</a>
         <a class="btn btn-register" routerLink="/register">Registrar</a>
       </div>
@@ -48,15 +48,15 @@
           >
             <img src="assets/img/perfil_1-removebg-preview.png" alt="Avatar" class="avatar">
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" *ngIf="profileId === 1">
+          <ul class="dropdown-menu dropdown-menu-end" *ngIf="profileId === 1; else options">
             <li><a class="dropdown-item" routerLink="/personal/profile">Perfil</a></li>
             <li><a class="dropdown-item" routerLink="/personal/history">Histórico</a></li>
             <li><a class="dropdown-item" routerLink="/personal/task">Tarefas</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger"  (click)="logout()">Sair</a></li>
           </ul>
-          <ng-template #therapist>
-            <ul class="dropdown-menu dropdown-menu-end" *ngIf="profileId === 2 || profileId === 3">
+          <ng-template #options>
+            <ul class="dropdown-menu dropdown-menu-end" >
               <li><a class="dropdown-item" routerLink="/therapist">Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-danger"  (click)="logout()">Sair</a></li>
