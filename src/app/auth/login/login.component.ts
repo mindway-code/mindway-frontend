@@ -13,6 +13,7 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  loading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -20,10 +21,14 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.email && this.password) {
 
+      this.loading = true;
+      console.log(this.loading);
+
       this.authService.login(this.email, this.password).subscribe(
         (response) => {
           this.authService.saveToken(response.token);
           this.errorMessage = '';
+          this.loading = false;
           this.router.navigate(['/']);
         },
         (error) => {

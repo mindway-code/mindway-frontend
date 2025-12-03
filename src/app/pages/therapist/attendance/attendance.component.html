@@ -1,0 +1,112 @@
+<div class="attendance-panel">
+  <h3 class="mb-4">Painel de Atendimentos do Terapeuta</h3>
+
+  <!-- CARD 1: Associar Paciente -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3">1. Associar Paciente</h5>
+      <div *ngIf="loadingPatients">Carregando pacientes...</div>
+      <div *ngIf="!loadingPatients && associatedPatients.length">
+        <div class="list-group">
+          <button
+            *ngFor="let patient of associatedPatients"
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedPatient?.id === patient.id"
+            (click)="selectPatient(patient)">
+            {{ patient.name }} {{ patient.surname }} ({{ patient.email }})
+          </button>
+        </div>
+      </div>
+      <div *ngIf="!loadingPatients && !associatedPatients.length" class="text-muted">
+        Nenhum paciente associado ao terapeuta.
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: Iniciar Atendimento + Cronômetro -->
+  <div class="card mb-4 shadow-sm" *ngIf="selectedPatient">
+    <div class="card-body">
+      <h5 class="card-title mb-3">2. Iniciar Atendimento</h5>
+      <div *ngIf="!started">
+        <textarea class="form-control mb-2" [(ngModel)]="summary" rows="3" placeholder="Resumo do atendimento (opcional)"></textarea>
+        <button class="btn btn-success" (click)="startAttendance()">Iniciar Atendimento</button>
+      </div>
+      <div *ngIf="started">
+        <div class="d-flex align-items-center mb-2">
+          <span class="timer-badge me-3">
+            <i class="bi bi-clock-history"></i> {{ timerDisplay }}
+          </span>
+          <span class="badge bg-primary ms-2">{{ selectedPatient.name }} {{ selectedPatient.surname }}</span>
+        </div>
+        <div class="text-muted small">Atendimento em andamento</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: Criar tarefa -->
+  <div class="card mb-4 shadow-sm" *ngIf="attendanceId && started">
+    <div class="card-body">
+      <h5 class="card-title mb-3">3. Tarefas do Atendimento</h5>
+      <app-therapist-task [attendanceId]="attendanceId"></app-therapist-task>
+    </div>
+  </div>
+
+  <!-- CARD 4: Encerrar atendimento -->
+  <div class="card shadow-sm" *ngIf="started && !finished">
+    <div class="card-body">
+      <h5 class="card-title mb-3">4. Encerrar Atendimento</h5>
+      <button class="btn btn-danger" (click)="endAttendance()">Encerrar Atendimento</button>
+    </div>
+  </div>
+
+  <!-- Mensagem final -->
+  <div class="alert alert-success mt-4" *ngIf="finished">
+    Atendimento encerrado com sucesso!
+  </div>
+
+</div>
+
+<!-- CARD HISTÓRICO DE ATENDIMENTOS -->
+<div class="card mb-4 shadow-sm" *ngIf="selectedPatient">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Histórico de Atendimentos de {{ selectedPatient.name }}</h5>
+    <div *ngIf="attendances.length; else noAtts">
+      <div *ngFor="let att of attendances" class="att-history-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <span class="fw-bold text-dark">
+              {{ att.started_at | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+            <span *ngIf="att.ended_at" class="badge bg-secondary ms-2">Encerrado</span>
+            <span *ngIf="!att.ended_at" class="badge bg-warning ms-2 text-dark">Em aberto</span>
+          </div>
+          <button class="btn btn-link text-decoration-none" (click)="expandAttendance(att.id)">
+            <span *ngIf="expandedAttendanceId !== att.id">Ver tarefas <i class="bi bi-chevron-down"></i></span>
+            <span *ngIf="expandedAttendanceId === att.id">Ocultar <i class="bi bi-chevron-up"></i></span>
+          </button>
+        </div>
+        <div *ngIf="expandedAttendanceId === att.id" class="mt-2 ms-2">
+          <div class="mb-2">
+            <strong>Resumo:</strong> <span class="text-muted">{{ att.summary || '(sem resumo)' }}</span>
+          </div>
+          <div>
+            <strong>Tarefas:</strong>
+            <ul class="list-group mt-1">
+              <li *ngFor="let task of tasksMap[att.id]" class="list-group-item py-1">
+                <span [ngClass]="{'text-decoration-line-through': task.status === 'done'}">{{ task.description }}</span>
+                <span class="badge bg-light text-dark ms-2">{{ task.status === 'done' ? 'Concluída' : 'Pendente' }}</span>
+                <span *ngIf="task.due_date" class="badge bg-info text-dark ms-2">Prazo: {{ task.due_date | date:'dd/MM/yyyy' }}</span>
+              </li>
+            </ul>
+            <div *ngIf="!tasksMap[att.id]?.length" class="text-muted">Sem tarefas para este atendimento.</div>
+          </div>
+        </div>
+        <hr class="my-2">
+      </div>
+    </div>
+    <ng-template #noAtts>
+      <div class="text-muted">Nenhum atendimento encontrado para este paciente.</div>
+    </ng-template>
+  </div>
+</div>
+

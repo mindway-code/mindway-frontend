@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class SocketService {
   private socket: Socket;
-  private apiUrl = `${environment.apiBaseUrl}`;
+  private apiUrl = `${environment.apiBaseUrlSocket}`;
 
   constructor() {
     this.socket = io(this.apiUrl, {

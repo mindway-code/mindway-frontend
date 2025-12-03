@@ -1,9 +1,8 @@
 // pages/register/register.component.ts
 
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import {  NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -19,6 +18,7 @@ export class RegisterComponent {
   password = '';
   confirmPassword = '';
   errorMessage: string = '';
+  loading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -30,24 +30,20 @@ export class RegisterComponent {
     form.form.markAllAsTouched();
 
     if (form.valid && this.password === this.confirmPassword) {
-      console.log(this.name, this.surname, this.email, this.password, this.confirmPassword)
+      this.loading = true;
       this.authService.register(this.name, this.surname, this.email, this.password, this.confirmPassword).subscribe(
         (response) => {
           this.authService.saveToken(response.token);
           this.errorMessage = '';
+          this.loading = false;
           this.router.navigate(['/']);
         },
         (error) => {
           this.errorMessage = error;
+          this.loading = false;
           console.log(error)
         }
       );
-
-
-
-      console.log('Cadastrando usuário:', {
-        form
-      });
     }
   }
 }

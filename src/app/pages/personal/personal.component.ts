@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-personal',
@@ -13,10 +15,10 @@ export class PersonalComponent implements OnInit {
   displayReports: boolean = false;
   displayTasks: boolean = false;
   displayNotifications: boolean = false;
+  userName!: string;
 
   // Informações do usuário (pode ser carregado de um serviço ou API)
   userRole: string = 'Pai de criança neurodivergente';
-  userName: string = 'João Silva';
   userEmail: string = 'joao.silva@email.com';
 
   userSessions = [
@@ -34,11 +36,11 @@ export class PersonalComponent implements OnInit {
     { title: 'Tarefa 2: Desafios de Coordenação Motora', description: 'Trabalhar atividades de coordenação', status: 'Em progresso' },
   ];
 
-  constructor() {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // Aqui você pode chamar um serviço para buscar dados reais do usuário, por exemplo.
-  }
+    this.userName = this.authService.currentUser?.name || 'Usuário';
+   }
 
   editProfile() {
     // Método para permitir que o usuário edite seu perfil

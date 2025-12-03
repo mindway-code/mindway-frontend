@@ -26,11 +26,19 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiMyapp}users`);
   }
 
+  searchAllUsersByName(term: string, page: number, pageSize: number): Observable<User[]> {
+    let params = new HttpParams()
+      .set('name', term)
+      .set('page', page)
+      .set('pageSize', pageSize);
+    return this.http.get<User[]>(`${this.apiMyapp}try/search-all`, { params });
+  }
+
   getUser() {
     return this.http.get<User[]>(`${this.apiMyapp}users`);
   }
 
-  getUsers(page = 1, pageSize = 10): Observable<UserPage> {
+  getUsers(page = 1, pageSize: number): Observable<UserPage> {
     let params = new HttpParams()
       .set('page', page)
       .set('pageSize', pageSize);

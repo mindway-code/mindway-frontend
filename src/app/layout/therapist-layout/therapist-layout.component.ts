@@ -27,9 +27,10 @@ export class TherapistLayoutComponent {
   ) {}
 
   menuItems: MenuItem[] = [
-    { label: 'Guias',     link: '/therapist/guide',    icon: 'bi bi-book'         },
+    { label: 'Clientes',     link: '/therapist/association',    icon: 'bi bi-people'  },
     { label: 'Agenda',    link: '/therapist/schedule', icon: 'bi bi-calendar2'    },
     { label: 'Rede de Apoio',   link: '/social-network',   icon: 'bi bi-people-fill'  },
+    { label: 'Atendimentos',   link: '/therapist/attendance',   icon: 'bi bi-clipboard-check'  },
   ];
 
   setClass(classes: string) {

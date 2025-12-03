@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,13 +17,13 @@ export class ProfileComponent {
       link: '/personal/edit-profile',
       button: 'Editar Perfil'
     },
-    {
-      title: 'Filhos Cadastrados',
-      text: 'Caio Silva, 5 anos , Alice Silva, 3 anos',
-      icon: 'bi bi-person-arms-up',
-      link: '/personal/children',
-      button: 'Ver Detalhes'
-    },
+    // {
+    //   title: 'Filhos Cadastrados',
+    //   text: 'Caio Silva, 5 anos , Alice Silva, 3 anos',
+    //   icon: 'bi bi-person-arms-up',
+    //   link: '/personal/children',
+    //   button: 'Ver Detalhes'
+    // },
     {
       title: 'Histórico de Atendimentos',
       text: 'Todos os atendimentos e progresso.',
@@ -51,4 +53,12 @@ export class ProfileComponent {
       button: 'Ver Notificações'
     }
   ];
+  userName?: any;
+
+  constructor(public authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.userName = this.authService.currentUser?.name;
+   }
+
 }

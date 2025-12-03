@@ -17,14 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.user$.subscribe({
-      next: (res) => {
-        this.profileId = res?.profile_id;
-      },
-      error: (error) => {
-        console.error('Error loading user:', error);
-      }
-    });
+    this.profileId = this.authService.currentUser?.profile_id;
   }
 
 }

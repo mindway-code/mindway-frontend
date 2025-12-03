@@ -24,6 +24,8 @@ import { AuthTherapistGuard } from './auth/guard/therapist.guard';
 import { TeacherComponent } from './pages/teacher/teacher.component';
 import { ClientAppointmentsComponent } from './pages/client-appointments/client-appointments.component';
 import { SocialNetworkComponent } from './pages/social-network/social-network.component';
+import { AssociationComponent } from './pages/therapist/association/association.component';
+import { AttendanceComponent } from './pages/therapist/attendance/attendance.component';
 
 const routes: Routes = [
   // Rota para as páginas com layout comum
@@ -83,9 +85,11 @@ const routes: Routes = [
     canActivateChild: [AuthTherapistGuard],
     children: [
       { path: 'profile',   component: TherapistProfileComponent },
+      { path: 'association',    component: AssociationComponent },
       { path: 'guide',    component: GuideComponent },
       { path: 'schedule', component: ScheduleComponent },
       { path: 'family',   component: FamilyComponent },
+      { path: 'attendance', component: AttendanceComponent },
       { path: '', redirectTo: 'profile', pathMatch: 'full' }
     ]
   },

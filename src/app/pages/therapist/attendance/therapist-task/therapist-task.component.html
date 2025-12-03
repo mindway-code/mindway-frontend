@@ -1,0 +1,76 @@
+<div class="tasks-container">
+  <h3>Tarefas</h3>
+
+  <!-- FORM DE CRIAÇÃO -->
+  <div class="task-form">
+    <input
+      type="text"
+      placeholder="Descrição da tarefa"
+      [(ngModel)]="newTaskDescription"
+    />
+
+    <input
+      type="date"
+      [(ngModel)]="newTaskDueDate"
+    />
+
+    <button (click)="createTask()">Adicionar</button>
+  </div>
+
+  <!-- LISTA DE TASKS -->
+  <div class="task-list" *ngIf="tasks.length; else emptyState">
+    <div class="task-item" *ngFor="let task of tasks">
+
+      <!-- EDIÇÃO -->
+      <div *ngIf="editingTask?.id === task.id" class="edit-box">
+        <textarea [(ngModel)]="editingTask!.description"></textarea>
+
+        <input type="date" [(ngModel)]="editingTask!.due_date" />
+
+        <select [(ngModel)]="editingTask!.status">
+          <option value="pending">Pendente</option>
+          <option value="done">Concluída</option>
+        </select>
+
+        <div class="edit-actions">
+          <button class="save" (click)="saveEdit()">Salvar</button>
+          <button class="cancel" (click)="cancelEdit()">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- VISUALIZAÇÃO -->
+      <ng-container *ngIf="editingTask?.id !== task.id">
+        <div class="left">
+          <span class="desc" [class.done]="task.status === 'done'">
+            {{ task.description }}
+          </span>
+
+          <span class="due" *ngIf="task.due_date">
+            Prazo: {{ task.due_date | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+
+        <div class="actions">
+          <button class="status" (click)="toggleStatus(task)">
+            <i *ngIf="task.status === 'pending'" class="bi bi-check-circle"></i>
+            <i *ngIf="task.status === 'done'" class="bi bi-arrow-counterclockwise"></i>
+          </button>
+
+          <button class="edit" (click)="enableEdit(task)">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+
+          <button class="delete" (click)="deleteTask(task)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <p style="color: #777; text-align:center; margin-top:1rem;">
+      Nenhuma tarefa cadastrada.
+    </p>
+  </ng-template>
+</div>

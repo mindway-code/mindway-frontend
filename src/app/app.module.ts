@@ -46,6 +46,9 @@ import { TeacherLayoutComponent } from './layout/teacher-layout/teacher-layout.c
 import { SocialNetworkComponent } from './pages/social-network/social-network.component';
 import { ClientAppointmentsComponent } from './pages/client-appointments/client-appointments.component';
 import { CalendarComponent } from './pages/therapist/schedule/calendar/calendar.component';
+import { AssociationComponent } from './pages/therapist/association/association.component';
+import { AttendanceComponent } from './pages/therapist/attendance/attendance.component';
+import { TherapistTaskComponent } from './pages/therapist/attendance/therapist-task/therapist-task.component';
 
 registerLocaleData(localePt);
 
@@ -84,7 +87,10 @@ registerLocaleData(localePt);
     UnauthorizedComponent,
     SocialNetworkComponent,
     ClientAppointmentsComponent,
-    CalendarComponent
+    CalendarComponent,
+    AssociationComponent,
+    AttendanceComponent,
+    TherapistTaskComponent
   ],
   imports: [
     BrowserModule,

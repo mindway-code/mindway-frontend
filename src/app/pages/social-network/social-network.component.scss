@@ -22,7 +22,7 @@ div {
 
   @media (max-width: 800px) {
     flex-direction: column-reverse;
-    min-height: 110vh;
+    min-height: fit-content;
   }
 
   .inputGroup {
@@ -140,8 +140,7 @@ div {
       left: 0;
       top: 0;
       bottom: 0;
-      min-height: inherit;
-      height: fit-content;
+      height: 110vh;
       box-shadow: 2px 0 16px rgba(0,0,0,0.08);
       background: #23232e;
       z-index: 1000;
@@ -192,6 +191,7 @@ div {
 
     @media (max-width: 800px) {
       width: 100%;
+      min-height: 100vh;
     }
 
     .bgImg {
@@ -209,8 +209,11 @@ div {
       z-index: -1;
 
       @media (max-width: 800px) {
-        opacity: 0.3;
-        height: 90%;
+        opacity: 0.4;
+        height: 100%;
+        border-radius: inherit;
+        width: 100%;
+        left: inherit;
       }
     }
 
@@ -305,7 +308,7 @@ div {
       border-radius: 60%;
 
       @media (max-width: 800px) {
-        opacity: 0.1;
+        opacity: 0.3;
       }
     }
 
@@ -453,6 +456,8 @@ div {
   padding: 2.5rem 1.2rem 1.2rem 2rem;
   border-radius: 1rem;
   max-width: 410px;
+  max-height: 95vh;
+  overflow-y: auto;
   width: 100%;
   box-shadow: 0 4px 24px rgba(0,0,0,0.10);
   animation: modalIn 0.25s;

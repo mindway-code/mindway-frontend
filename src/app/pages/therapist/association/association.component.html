@@ -1,0 +1,61 @@
+<div class="association-container">
+	<div class="mw-header">
+		<img src="assets/svg/therapist.svg" alt="Therapist" class="mw-hero" />
+		<h2>Associe seus pacientes facilmente</h2>
+		<p class="mw-helper">Selecione um paciente abaixo para associá-lo ao seu perfil de terapeuta. Isso permitirá que você acompanhe o progresso, envie mensagens e personalize o atendimento.</p>
+	</div>
+	<div *ngIf="message" class="message">{{ message }}</div>
+
+	<div class="mw-associated-list" *ngIf="associatedUsers.length > 0">
+		<h3 class="mw-associated-title">Pacientes já associados</h3>
+		<div class="mw-associated-users">
+			<div *ngFor="let user of associatedUsers" class="mw-associated-card">
+				<div class="mw-associated-info">
+					<span class="mw-user-name">{{ user.name }} {{ user.surname }}</span>
+					<span class="mw-email">({{ user.email }})</span>
+				</div>
+				<!-- Optional actions: remove/view more -->
+				<!-- <button class="mw-remove-btn" (click)="removeAssociatedUser(user.id)">Remover</button> -->
+			</div>
+		</div>
+	</div>
+
+	<div class="mw-form-group">
+		<label for="userSearch">Buscar paciente</label>
+		<input
+			id="userSearch"
+			type="text"
+			[(ngModel)]="searchTerm"
+			(ngModelChange)="onSearchTermChange()"
+			placeholder="Digite o nome ou sobrenome"
+			class="mw-search-input"
+			autocomplete="off"
+		/>
+		<div class="mw-user-list">
+			<div *ngFor="let user of filteredUsers" class="mw-user-item">
+				<label>
+					<input
+						type="checkbox"
+						[value]="user.id ? user.id.toString() : ''"
+						[checked]="selectedUserIds.includes(user.id ? user.id.toString() : '')"
+						(change)="toggleUserSelection(user.id ? user.id.toString() : '')"
+					/>
+					<span class="mw-user-name ms-3">{{ user.name }} {{ user.surname }}</span>
+					<span class="mw-email">({{ user.email }})</span>
+				</label>
+			</div>
+			<div *ngIf="filteredUsers.length === 0" class="mw-no-results">
+				Nenhum paciente encontrado.
+			</div>
+		</div>
+	</div>
+	<button class="mw-cta" (click)="associateUsers()" [disabled]="loading || selectedUserIds.length === 0">
+		<span *ngIf="!loading">Associar paciente(s) ao terapeuta</span>
+		<span *ngIf="loading">Associando...</span>
+	</button>
+	<div class="mw-footer">
+		<p class="mw-tip">
+			<span style="color:#f4b313;font-weight:600;">Dica:</span> Você pode associar múltiplos pacientes ao seu perfil e gerenciar todos em um só lugar!
+		</p>
+	</div>
+</div>

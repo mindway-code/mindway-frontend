@@ -1,36 +1,58 @@
 <div class="therapist-layout">
-  <!-- Sidebar -->
+  <!-- Navigation -->
   <nav class="nav">
     <div class="brand">
       <img src="assets/img/mindway-login-hero.png" alt="MindWay Logo">
       <span>MindWay</span>
     </div>
-    <ul class="menu">
+    <!-- Hamburger for mobile -->
+    <button class="hamburger" (click)="toggleMobileMenu()" aria-label="Abrir menu" type="button">
+      <span></span><span></span><span></span>
+    </button>
+    <!-- Desktop/Tablet Menu -->
+    <ul class="menu" [class.menu-open]="mobileMenuOpen">
+      <li *ngFor="let item of menuItems">
+        <a [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="m-1">
+          <i class="{{item.icon}}"></i>
+          <span class="label">{{ item.label }}</span>
+        </a>
+      </li>
+      <li>
+        <a href="/therapist/profile" (click)="setClass('profile')" [ngClass]="{ 'tab-active': classStyle === 'profile' }">
+          <i class="bi bi-person-circle"></i>
+          <span class="label">Meu Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="exit()">
+          <i class="bi bi-door-open"></i>
+          <span class="label">Sair</span>
+        </a>
+      </li>
+    </ul>
+    <!-- Mobile bottom nav -->
+    <ul class="bottom-nav" *ngIf="mobileMenuOpen">
       <li *ngFor="let item of menuItems">
         <a [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
           <i class="{{item.icon}}"></i>
           <span class="label">{{ item.label }}</span>
         </a>
       </li>
+      <li>
+        <a href="/therapist/profile" (click)="setClass('profile')" [ngClass]="{ 'tab-active': classStyle === 'profile' }">
+          <i class="bi bi-person-circle"></i>
+          <span class="label">Meu Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="exit()">
+          <i class="bi bi-door-open"></i>
+          <span class="label">Sair</span>
+        </a>
+      </li>
     </ul>
-    <a
-      href="/therapist/profile"
-      (click)="setClass('profile')"
-      [ngClass]="{ 'tab-active': classStyle === 'profile' }"
-      class="link me-4 d-flex flex-column align-items-center
-      justify-content-center text-decoration-none text-white ">
-
-      <i class="bi bi-person-circle  fs-4"></i>
-      <span class="label">Meu Perfil</span>
-
-    </a>
-    <a  (click)="exit()" class="link me-4 d-flex flex-column align-items-center justify-content-center text-decoration-none text-white ">
-      <i class="bi bi-door-open  fs-4"></i>
-      <span class="label">Sair</span>
-    </a>
   </nav>
-
-  <!-- Conteúdo -->
+  <!-- Content -->
   <main class="content">
     <router-outlet></router-outlet>
   </main>

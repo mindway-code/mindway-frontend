@@ -1,0 +1,69 @@
+$primary-color: #006c70;
+$secondary-color: #f4b313;
+$bg-color: #f4f7f6;
+$card-radius: 16px;
+
+.attendance-panel {
+  padding: 1rem 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: $card-radius;
+  background: $bg-color;
+  border: none;
+
+  .card-title {
+    color: $primary-color;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .list-group-item {
+    cursor: pointer;
+    &.active {
+      background: $primary-color;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  .timer-badge {
+    background: $secondary-color;
+    color: #23232e;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  textarea.form-control {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+}
+
+.btn-success {
+  background: $primary-color;
+  border: none;
+  font-weight: 600;
+  &:hover { filter: brightness(1.08); }
+}
+.btn-danger {
+  background: #d9534f;
+  border: none;
+  font-weight: 600;
+  &:hover { filter: brightness(1.15); }
+}
+
+.alert-success {
+  color: $primary-color;
+  background: #e8fff4;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+}

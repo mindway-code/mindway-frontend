@@ -1,13 +1,6 @@
-// pages/history/history.component.ts
-
 import { Component, OnInit } from '@angular/core';
-
-interface HistoryItem {
-  id: number;
-  paciente: string;
-  data: string;    // ISO date string
-  resumo: string;
-}
+import { AttendanceService, Attendance } from '../../services/attendance.service';
+import { TaskService, Task } from '../../services/task.service';
 
 @Component({
   selector: 'app-history',
@@ -16,60 +9,49 @@ interface HistoryItem {
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
-  /** termo de busca */
-  searchTerm = '';
+  attendances: (Attendance & { tasks?: Task[] })[] = [];
+  expanded: boolean[] = [];
+  loading = false;
 
-  /** filtros de data */
-  startDate!: string;
-  endDate!: string;
-
-  /** lista de atendimentos (mock) */
-  historyList: HistoryItem[] = [
-    {
-      id: 1,
-      paciente: 'João Silva',
-      data: '2025-02-15',
-      resumo: 'Progresso nas áreas de linguagem e habilidades motoras.'
-    },
-    {
-      id: 2,
-      paciente: 'Ana Silva',
-      data: '2025-02-22',
-      resumo: 'Avanços na interação social e comunicação não-verbal.'
-    },
-    {
-      id: 3,
-      paciente: 'Carlos Silva',
-      data: '2025-03-05',
-      resumo: 'Melhoria no foco e habilidades de resolução de problemas.'
-    },
-    // mais itens...
-  ];
-
-  constructor() {}
+  constructor(
+    private attendanceService: AttendanceService,
+    private taskService: TaskService
+  ) {}
 
   ngOnInit(): void {
-    // Aqui você pode, por exemplo, chamar um serviço para carregar o histórico real
+    this.loadAttendances();
   }
 
-  /**
-   * Retorna apenas os itens que correspondem ao termo de busca e intervalo de datas
-   */
-  filteredHistory(): HistoryItem[] {
-    return this.historyList.filter(item => {
-      const textMatch = item.paciente
-        .toLowerCase()
-        .includes(this.searchTerm.toLowerCase());
-
-      const date = new Date(item.data);
-      const afterStart = this.startDate
-        ? date >= new Date(this.startDate)
-        : true;
-      const beforeEnd = this.endDate
-        ? date <= new Date(this.endDate)
-        : true;
-
-      return textMatch && afterStart && beforeEnd;
+  loadAttendances() {
+    this.loading = true;
+    this.attendanceService.getByUserId().subscribe(res => {
+      this.attendances = res.data;
+      this.expanded = this.attendances.map(() => false);
+      this.mergeTasks();
+      this.loading = false;
     });
+  }
+
+  mergeTasks() {
+    this.attendances.forEach((att, idx) => {
+      this.taskService.getTasks({ attendance_id: att.id }).subscribe(res => {
+        this.attendances[idx].tasks = res.data;
+      });
+    });
+  }
+
+  toggleExpand(idx: number) {
+    this.expanded[idx] = !this.expanded[idx];
+  }
+
+  getDuration(start: string | null, end: string | null): string {
+    if (!start || !end) return '';
+    const s = new Date(start);
+    const e = new Date(end);
+    const ms = e.getTime() - s.getTime();
+    if (ms < 0) return '';
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    return `${h}h ${m}min`;
   }
 }

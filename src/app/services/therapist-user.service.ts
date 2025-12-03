@@ -21,8 +21,16 @@ export class TherapistUserService {
 
   constructor(private http: HttpClient) {}
 
+  getAssociatedUsers(): Observable<Therapist[]> {
+    return this.http.get<Therapist[]>(`${this.apiUrl}/associated/therapist`);
+  }
+
   getAssociatedTherapists(): Observable<Therapist[]> {
     return this.http.get<Therapist[]>(`${this.apiUrl}/associated`);
+  }
+
+  associateUserToTherapist(user_id: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, { user_id });
   }
 
 }

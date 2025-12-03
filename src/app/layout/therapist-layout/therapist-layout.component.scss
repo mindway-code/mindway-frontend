@@ -10,29 +10,52 @@ $txt-muted:   #e0e0e0;
   height: 100vh;
   overflow: hidden;
   flex-direction: column;
-
+  .bi-door-open {
+    cursor: pointer;
+  }
   .nav {
     width: 100%;
     background: $mw-primary;
     color: $txt-light;
     display: flex;
     flex-direction: row;
-    padding: 0.5rem 0 0.5rem 0.5rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
     box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    gap: 1rem;
+    position: relative;
 
     .brand {
-      display: none;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 2rem;
       img {
-        height: 40px;
+        height: 36px;
         margin-right: 0.5rem;
       }
       span {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         font-weight: 700;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+      span {
+        display: block;
+        width: 24px;
+        height: 3px;
+        background: $txt-light;
+        margin: 4px 0;
+        border-radius: 2px;
+        transition: all 0.2s;
       }
     }
 
@@ -42,26 +65,26 @@ $txt-muted:   #e0e0e0;
       list-style: none;
       padding: 0;
       margin: 0;
-
+      align-items: center;
       li {
         a {
           display: flex;
           align-items: center;
-          justify-content: center;
-          flex-direction: column;
+          gap: 0.5rem;
           padding: 0.75rem 1.25rem;
           color: $txt-light;
           text-decoration: none;
           border-left: 4px solid transparent;
           transition: background 0.2s, border-color 0.2s;
-
+          font-size: 1rem;
+          cursor: pointer;
           i {
             font-size: 1.25rem;
           }
           .label {
-            flex: 1;
+            display: inline-block;
+            font-size: 1rem;
           }
-
           &:hover {
             background: rgba(255,255,255,0.1);
           }
@@ -74,16 +97,10 @@ $txt-muted:   #e0e0e0;
         }
       }
     }
-  }
 
-  .link {
-    transition: background 0.2s, border-color 0.2s;
-    padding: 0.5rem;
-    cursor: pointer;
-    &:hover {
-      background: rgba(255,255,255,0.1);
+    .bottom-nav {
+      display: none;
     }
-
   }
 
   .content {
@@ -95,7 +112,6 @@ $txt-muted:   #e0e0e0;
 }
 
 .tab-active {
-  // background: $mw-accent;
   color: $mw-primary;
   border-bottom: 5px solid;
   border-radius: 5px;
@@ -106,40 +122,59 @@ $txt-muted:   #e0e0e0;
   }
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 1108px) {
   .therapist-layout {
-    flex-direction: column;
     .nav {
-      width: 100%;
       flex-direction: row;
       align-items: center;
-      padding: 0.5rem;
-      .brand { display: none; }
-      .menu {
+      padding: 0.5rem 0.5rem;
+      .brand {
         display: flex;
+        img { height: 28px; }
+        span { font-size: 0.95rem; }
+      }
+      .menu {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .bottom-nav {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $mw-primary;
+        color: $txt-light;
+        list-style: none;
+        margin: 0;
+        padding: 0.5rem 0;
+        justify-content: space-around;
+        z-index: 100;
         li {
+          flex: 1;
           a {
-            padding: .5rem;
+            display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            i { margin: inherit; font-size: 1.4rem; color: $bg-light;}
-            .label { display: none;  }
-            border-left: inherit;
+            justify-content: center;
+            color: $txt-light;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            i { font-size: 1.3rem; }
+            .label { display: none; }
             &.active {
-              background-color: rgba(203, 197, 197, 0.1);
-              color: $mw-primary;
-              border-bottom-color: $mw-accent;
+              color: $mw-accent;
               font-weight: 600;
-              border-bottom: 3px solid $mw-accent;
             }
           }
         }
       }
     }
-    .content {
-      padding: 1rem;
+    .content { padding: 1rem;
+      padding-bottom: 8rem;
     }
   }
 }

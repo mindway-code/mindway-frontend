@@ -28,7 +28,7 @@ export class SocialNetworkUserService {
   constructor(private http: HttpClient) {}
 
   /** Lista membros da rede (com paginação e filtro por socialNetworkId) */
-  getMembers(socialNetworkId: number, page = 1, pageSize = 10): Observable<SocialNetworkUserPage> {
+  getMembers(socialNetworkId: number, page = 1, pageSize = 5): Observable<SocialNetworkUserPage> {
     let params = new HttpParams()
       .set('socialNetworkId', socialNetworkId)
       .set('page', page)

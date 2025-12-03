@@ -30,7 +30,7 @@ export class AuthService {
   constructor(private http: HttpClient,
     private router: Router
   ) {
-      this.restoreUserFromToken();
+      this.recoverToken();
    }
 
   get token(): string | null {
@@ -54,6 +54,23 @@ export class AuthService {
       });
     } else {
       this.userSubject.next(null);
+    }
+  }
+
+  recoverToken() {
+    const token = localStorage.getItem(this.tokenKey);
+
+    try {
+      if (token) {
+        const payload = jwtDecode<{ id: string; name: string; avatar?: string; profile_id?: number }>(token);
+        this.userSubject.next({
+          id: payload.id,
+          name: payload.name,
+          profile_id: payload.profile_id
+        });
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 

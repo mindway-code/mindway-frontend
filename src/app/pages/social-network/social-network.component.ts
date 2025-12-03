@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 
 import { SocialNetwork, SocialNetworkPage, SocialNetworkService } from '../../services/social-network.service';
@@ -21,6 +21,7 @@ import { UserPage, UserService } from '../../services/user.service';
 
 export class SocialNetworkComponent implements OnInit, AfterViewInit{
   @ViewChild('chatBody') chatBody!: ElementRef;
+  @ViewChild('sidebarRef', { static: false }) sidebarRef!: ElementRef;
 
   open: boolean = false;
   openMember: boolean = false;
@@ -104,6 +105,21 @@ export class SocialNetworkComponent implements OnInit, AfterViewInit{
       const el = this.chatBody.nativeElement;
       el.scrollTop = el.scrollHeight;
     } catch (e) {}
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  @HostListener('document:mousedown', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    // Só fecha se estiver aberta
+    if (!this.sidebarOpen) {
+      // Checa se o clique foi fora do elemento da sidebar
+      if (this.sidebarRef && !this.sidebarRef.nativeElement.contains(event.target)) {
+        this.toggleSidebar();
+      }
+    }
   }
 
   ngOnInit() {
@@ -216,10 +232,6 @@ export class SocialNetworkComponent implements OnInit, AfterViewInit{
     this.openSocial = false;
   }
 
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
   openSocialAdd(value: boolean) {
     this.openModalAdd = value;
   }
@@ -279,7 +291,7 @@ export class SocialNetworkComponent implements OnInit, AfterViewInit{
   loadMembers(socialNetworkId: number, page: number = 1) {
     if (!socialNetworkId) return;
     this.membersLoading = true;
-    this.socialNetworkUserService.getMembers(socialNetworkId, page, 10)
+    this.socialNetworkUserService.getMembers(socialNetworkId, page, 5)
       .subscribe({
         next: (result: SocialNetworkUserPage) => {
           this.members = result.data;
@@ -324,9 +336,9 @@ export class SocialNetworkComponent implements OnInit, AfterViewInit{
 
   loadUsers(page: number = 1) {
     this.usersLoading = true;
-    let obs = this.userService.getUsers(page, 10);
+    let obs = this.userService.getUsers(page, 1);
     if (this.userSearchTerm?.trim()) {
-      obs = this.userService.searchUsersByName(this.userSearchTerm, page, 10);
+      obs = this.userService.searchUsersByName(this.userSearchTerm, page, 5);
     }
     obs.subscribe({
       next: (pageObj: UserPage) => {
@@ -358,6 +370,8 @@ export class SocialNetworkComponent implements OnInit, AfterViewInit{
 
         this.loadMembers(this.selectedNetwork.id, this.membersMeta?.currentPage || 1);
         this.loadUsers(this.usersPage?.currentPage || 1);
+        this.addUserSuccess = '';
+        this.addUserError = '';
       },
       error: (err) => {
         this.addUserError = err?.error?.error || 'Erro ao adicionar usuário.';

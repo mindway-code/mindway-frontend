@@ -1,15 +1,15 @@
 <div class="network-container d-flex text-center">
-  <div class="side-bar-button">
-    <a class="btn " (click)="toggleSidebar()">
+  <div class="side-bar-button" [class.hide]="!sidebarOpen" >
+    <a class="btn" (click)="toggleSidebar()">
       <i class="bi bi-chevron-compact-right "></i>
     </a>
   </div>
-  <div class="side-bar " [class.hide]="sidebarOpen" >
+  <div #sidebarRef class="side-bar " [class.hide]="sidebarOpen" >
     <div class="d-flex w-100 align-self-start px-2">
       <a (click)="navigateBack()" class="text-decoration-none text-white back"><i class="bi bi-chevron-double-left">Voltar</i></a>
     </div>
-    <button class="close-btn d-lg-none" (click)="toggleSidebar()">
-      <i class="bi bi-x-lg"></i>
+    <button class="close-btn d-lg-none fs-6" (click)="toggleSidebar()">
+      Fechar <i class="bi bi-x-lg"></i>
     </button>
     <div class="side-bar-logo">
       <img src="assets/img/rede2.png" alt="Rede de Apoio" class="img-fluid" style="max-width: 200px;">
@@ -18,7 +18,7 @@
     <div>
       <h3 class="text-white mb-4">Minhas Redes!</h3>
     </div>
-    <div class="d-flex flex-column w-100 align-items-center justify-content-center">
+    <div class="d-flex flex-column w-100 align-items-center justify-content-center" *ngIf="networks.length !== 0">
       <div class="d-flex flex-row align-items-center inputGroup gap-2">
         <i class="bi bi-search fs-6"></i>
         <input type="text" placeholder="Pesquisar Rede" class="" />
@@ -33,6 +33,11 @@
           <i class="bi bi-trash-fill "></i>
         </button>
       </div>
+    </div>
+    <div class="social d-flex flex-column w-100 align-items-center justify-content-center gap-3 mt-4" *ngIf="networks.length === 0">
+      <p class="text-white">Nenhuma rede de apoio encontrada. Crie ou junte-se a uma rede para começar a se conectar!</p>
+      <p class="text-white">Entre em contato com o seu terapeuta ou com o suporte para entrar em uma rede!</p>
+
     </div>
     <div class="social d-flex flex-column w-100 align-items-center justify-content-center gap-3">
         <ul class="social-list list-group mt-4 ">
@@ -91,7 +96,7 @@
     </div>
     <div class="chat-box d-flex w-100">
       <div class="chat-box-options d-flex gap-4">
-        <button (click)="openChat(true)">Abrir Chat <i class="bi bi-chat-text-fill "></i></button>
+        <button (click)="openChat(true)" *ngIf="networks.length !== 0">Abrir Chat <i class="bi bi-chat-text-fill "></i></button>
         <button (click)="navigateBack()">Voltar <i class="bi bi-door-open-fill  "></i></button>
       </div>
     </div>
@@ -245,8 +250,8 @@
             [disabled]="removingMemberId === member.id"
             *ngIf="member.user?.id !== user?.id"
           >
-            <i class="bi bi-person-x"></i>
-            Remover
+            <i class="bi bi-trash"></i>
+            <!-- Remover -->
           </button>
         </li>
       </ul>
@@ -291,43 +296,49 @@
       <div *ngIf="usersLoading" class="text-muted mb-2">Carregando usuários...</div>
       <div *ngIf="usersPage && usersPage.users.length === 0 && !usersLoading" class="text-muted mb-2">Nenhum usuário encontrado.</div>
 
-      <table class="table table-sm table-hover" *ngIf="usersPage && usersPage.users.length > 0">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let u of usersPage.users">
-            <td>{{ u.name }} {{ u.surname }}</td>
-            <td>{{ u.email }}</td>
-            <td>
-              <button class="btn btn-success btn-sm"
-                      (click)="onAddMember(u)"
-                      [disabled]="addingUserId === u.id">
-                <i class="bi bi-person-plus"></i> Adicionar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover" *ngIf="usersPage && usersPage.users.length > 0">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of usersPage.users">
+              <td>{{ u.name }} {{ u.surname }}</td>
+              <td>{{ u.email }}</td>
+              <td>
+                <button class="btn btn-success btn-sm"
+                        (click)="onAddMember(u)"
+                        [disabled]="addingUserId === u.id">
+                  <i class="bi bi-person-plus"></i>
+                  <!-- Adicionar -->
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
 
       <!-- Paginação da tabela de usuários -->
-      <nav *ngIf="usersPage && usersPage.totalPages > 1">
+      <nav *ngIf="usersPage && usersPage.totalPages > 1" class="w-100 mt-2 position-relative">
         <ul class="pagination justify-content-center mb-0">
-          <li class="page-item" [class.disabled]="usersPage.currentPage === 1">
+          <li class="page-item " [class.disabled]="usersPage.currentPage === 1">
             <button class="page-link" (click)="loadUsers(usersPage.currentPage - 1)">Anterior</button>
           </li>
-          <li class="page-item"
-              *ngFor="let i of [].constructor(usersPage.totalPages); let idx = index"
-              [class.active]="usersPage.currentPage === idx + 1">
-            <button class="page-link" (click)="loadUsers(idx + 1)">
-              {{ idx + 1 }}
-            </button>
-          </li>
-          <li class="page-item" [class.disabled]="usersPage.currentPage === usersPage.totalPages">
+          <div class="overflow-x-auto d-flex flex-row">
+            <li class="page-item "
+                *ngFor="let i of [].constructor(usersPage.totalPages); let idx = index"
+                [class.active]="usersPage.currentPage === idx + 1">
+              <button class="page-link" (click)="loadUsers(idx + 1)">
+                {{ idx + 1 }}
+              </button>
+            </li>
+          </div>
+          <li class="page-item  " [class.disabled]="usersPage.currentPage === usersPage.totalPages">
             <button class="page-link" (click)="loadUsers(usersPage.currentPage + 1)">Próxima</button>
           </li>
         </ul>

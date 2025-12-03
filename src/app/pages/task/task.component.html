@@ -1,116 +1,53 @@
-<div class="task-container ">
-  <!-- Header com Busca e Filtros -->
-  <div class="task-header d-flex">
-    <h2 class="task-title">Minhas Tarefas</h2>
-    <div class="search-container ">
-      <input
-        type="text"
-        class="form-control me-3"
-        placeholder="🔍 Buscar tarefa..."
-        [(ngModel)]="searchTerm"
-      />
-      <div class="btn-group" role="group">
-        <button
-          type="button"
-          class="btn"
-          [ngClass]="{'btn-primary': filter === 'all'}"
-          (click)="filter='all'"
-        >Todas</button>
-        <button
-          type="button"
-          class="btn"
-          [ngClass]="{'btn-primary': filter === 'pending'}"
-          (click)="filter='pending'"
-        >Pendentes</button>
-        <button
-          type="button"
-          class="btn"
-          [ngClass]="{'btn-primary': filter === 'completed'}"
-          (click)="filter='completed'"
-        >Concluídas</button>
-      </div>
-    </div>
-  </div>
+<div class="task-container">
+	<div class="task-header mb-4">
+		<h2>Tarefas do Usuário</h2>
+		<p class="text-muted">Veja, filtre e conclua suas tarefas de atendimento.</p>
+		<div class="search-bar mb-3">
+			<input type="text" class="form-control" placeholder="Buscar tarefa..." [(ngModel)]="searchTerm" (input)="filterTasks()">
+		</div>
+	</div>
 
-<!-- Container Flexível de Cards -->
-<div class="cards-flex">
-  <div *ngFor="let tarefa of filteredTarefas()" class="card-wrapper">
-    <div class="card task-card h-100">
-      <div class="card-body d-flex flex-column">
-        <div class=" d-flex justify-content-between align-items-center mb-2 card-title-container">
-          <h5 class="card-title mb-0 ">{{ tarefa.titulo }}</h5>
-          <span class="badge" [ngClass]="statusBadgeClass(tarefa)">
-            {{ statusBadgeText(tarefa) }}
-          </span>
-        </div>
-        <p class="card-text flex-grow-1 ">{{ tarefa.descricao }}</p>
-        <div class="d-flex justify-content-between align-items-center mt-3">
-          <div class="form-check form-switch">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              [id]="'toggle'+tarefa.id"
-              [(ngModel)]="tarefa.concluida"
-              (change)="toggleConcluida(tarefa)"
-            />
-          </div>
-          <a
-            [routerLink]="['/tarefas', tarefa.id]"
-            class="btn btn-sm btn-outline-light text-black"
-          >Detalhes</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<div *ngIf="loading" class="text-center my-5">
+		<div class="spinner-border text-accent" role="status"></div>
+	</div>
 
-
-  <!-- Botão Flutuante p/ Criar -->
-  <button class="fab btn btn-primary" (click)="createTask()">
-    <i class="bi bi-plus-lg"></i>
-  </button>
-
-  <!-- Modal de Criação de Tarefa (igual ao anterior) -->
-  <div *ngIf="isCreating" class="modal-overlay">
-    <div class="test">
-      <h3 class="  ">Nova Tarefa</h3>
-      <form (ngSubmit)="submitTask()">
-        <div class="form-group mb-3">
-          <label for="titulo">Título</label>
-          <input
-            id="titulo"
-            class="form-control"
-            [(ngModel)]="newTask.titulo"
-            name="titulo"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="descricao">Descrição</label>
-          <textarea
-            id="descricao"
-            class="form-control"
-            [(ngModel)]="newTask.descricao"
-            name="descricao"
-            required
-          ></textarea>
-        </div>
-        <div class="form-group mb-3">
-          <label for="dataVencimento">Vence em</label>
-          <input
-            id="dataVencimento"
-            type="date"
-            class="form-control"
-            [(ngModel)]="newTask.dataVencimento"
-            name="dataVencimento"
-            required
-          />
-        </div>
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-secondary me-2" (click)="cancelCreate()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+	<div class="d-flex flex-wrap gap-4 task-list-container" *ngIf="!loading">
+		<div class="task-list" *ngFor="let task of filteredTasks">
+			<div class="card task-card shadow-sm rounded-4 h-100">
+				<div class="card-body d-flex flex-column">
+					<div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+						<h6 class="mb-0">
+							<i class="bi bi-clipboard-check me-2 text-dark"></i>
+							{{ task.description || 'Sem descrição' }}
+						</h6>
+						<span class="badge" [ngClass]="task.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+							{{ task.status === 'done' ? 'Concluída' : 'Pendente' }}
+						</span>
+					</div>
+					<div class="mb-2 text-muted">
+						<i class="bi bi-calendar-event me-1"></i> {{ task.created_at | date:'dd/MM/yyyy HH:mm' }}
+					</div>
+					<div class="mb-2">
+						<label class="form-label">Descrição</label>
+						<div class="task-desc">{{ task.description }}</div>
+					</div>
+					<div *ngIf="task.status !== 'done'" class="mt-auto">
+						<label class="form-label">Feedback ao concluir</label>
+						<textarea class="form-control mb-2" [(ngModel)]="feedbacks[task.id]" rows="2" placeholder="Deixe um feedback..."></textarea>
+						<button class="btn btn-color text-white w-auto align-self-center" (click)="markCompleted(task)">
+							<i class="bi bi-check-circle me-2"></i> Conluir
+						</button>
+					</div>
+					<div *ngIf="task.status === 'done'" class="mt-auto">
+						<div class="alert alert-success mt-2 mb-0 p-2 text-center">
+							<i class="bi bi-check-circle-fill me-1"></i> Tarefa concluída
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="!loading && filteredTasks.length === 0" class="text-muted text-center w-100 py-5">
+			Nenhuma tarefa encontrada.
+		</div>
+	</div>
 </div>
